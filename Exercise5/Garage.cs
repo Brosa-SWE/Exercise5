@@ -2,16 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Exercise5
-{   
+{
     //Todo: Add constraint "where.... "
-    internal class Garage<IEnumberable> : IGarage<IEnumerable>
+    internal class Garage : IEnumerable // : IGarage<IEnumerable>
     {
         private int GarageSize;
         private Vehicle[] Vehicles;
+        private List<string> RegNos = new List<string>();
         private UI UI;
 
         public Garage(int noOfVehicles, UI ui)
@@ -26,19 +28,55 @@ namespace Exercise5
             throw new NotImplementedException();
         }
 
-        public bool AddVehicle(Vehicle vehicle)
+        public bool Add(Vehicle vehicle)
         {
-            if (Vehicles.Length < GarageSize)
+            bool AddedVehicle = false;
+
+            try
             {
-                Vehicles.Append(vehicle);
+                IsVehicleAllowedToBeAddedToTheGarage(vehicle);
+            }
+            catch (GarageException e)
+            {
+                UI.WriteError(e.Message);
+            }
+
+            for (int i = 0; i < Vehicles.Length; i++)
+            {
+                if (Vehicles[i] == null)
+                {
+                    Vehicles[i] = vehicle;
+                    AddedVehicle = true;
+                    RegNos.Add(vehicle.RegNo);
+                    break;
+                }
+            }
+
+            if (AddedVehicle == true)
+            {
                 UI.Write("Added " + vehicle + " to the Garage");
-                return true;
             }
-            else
+ 
+            return AddedVehicle;
+        }
+
+        // Verify that all is Good
+        private bool IsVehicleAllowedToBeAddedToTheGarage(Vehicle vehicle)
+        {
+            // Ensure unique Reg Nos
+            if (RegNos.Contains(vehicle.RegNo))
             {
-                UI.Write($"Could not add {vehicle} to the Garage, it's full (Max {GarageSize} vehicles)");
-                return false;
+                throw new GarageException(999, ($"RegNo {vehicle.RegNo} is already in the Garage so the {vehicle.Color} {vehicle.VehicleType()} cannot be added."));
             }
+
+            // Ensure space available in the Garage
+            if (RegNos.Count == GarageSize)
+            {
+                throw new GarageException(999, ($"The Garage is full (Max {GarageSize} vehicles, so the {vehicle.Color} {vehicle.VehicleType()} cannot be added."));
+            }
+            
+            // All Good
+            return true;
         }
 
         public bool RemoveVehicle(Vehicle vehicle)
@@ -60,6 +98,8 @@ namespace Exercise5
             if (foundVehicle)
             {
                 Vehicles = Vehicles.Where((source, index) => index != foundIndex).ToArray();
+                RegNos.Remove(vehicle.RegNo);
+
                 UI.Write($"Removed {vehicleInfo} from the Garage. The Garage now has {GarageSize} vehicles left.");
             }
             else
@@ -72,10 +112,44 @@ namespace Exercise5
 
         public void PrintGarage()
         {
-            foreach (Vehicle vehicle in Vehicles) {
-                UI.Write(vehicle.ToString());
+            UI.Write(" ");
+            UI.Write("Garage Content");
+            UI.Write("==============");
+
+            foreach (Vehicle vehicle in Vehicles)
+            {
+                if (vehicle != null)
+                {
+                    UI.Write(vehicle.ToString());
+                }
+            }
+
+            UI.Write(" ");
+            UI.Write("Press any key to contine...");
+        }
+
+    }
+
+    class GarageException : ApplicationException
+    {
+        public int ErrorCode;
+        private string errMessage;
+
+        public GarageException(int errorCode, string errorMessage)
+        {
+            ErrorCode = errorCode;
+            errMessage = errorMessage;
+        }
+
+        public override string Message
+        {
+            get
+            {
+                return errMessage;
             }
         }
- 
+
     }
+
+
 }

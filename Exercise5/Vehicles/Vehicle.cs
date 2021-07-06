@@ -22,7 +22,19 @@ namespace Exercise5
 
         public override string ToString()
         {
-            return ($"{Color} {this.GetType()} with {NoOfWheels} wheels");
+            string wheelInfo = "";
+
+            if (NoOfWheels != 0)
+            {
+                wheelInfo = ($" with { NoOfWheels} wheels");
+            }
+
+            return $"{Color} {VehicleType()}{wheelInfo}";
+        }
+
+        public string VehicleType()
+        {
+            return this.GetType().ToString().RightBack(".");
         }
     }
 }

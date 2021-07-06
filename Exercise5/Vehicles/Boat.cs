@@ -17,7 +17,7 @@ namespace Exercise5.Vehicles
 
         public override string ToString()
         {
-            return base.ToString() + " and " + Length + " meters long";
+            return base.ToString() + " that is " + Length + " meters long";
         }
     }
 }

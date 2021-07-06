@@ -6,44 +6,60 @@ namespace Exercise5
 {
     class Program
     {
-        public UI UI = new UI();
-        public Garage<IEnumerable> Garage;
-
+        public static UI UI = new UI();
+        
         static void Main(string[] args)
         {
-            Garage<IEnumerable> = CreateGarage(10);
+            Garage Garage = CreateGarage(9);
 
-            // addTestVehicles(Garage);
+            AddTestVehicles(Garage);
 
-            // Garage.PrintGarage();
+            Garage.PrintGarage();
 
             Console.ReadKey();
 
         }
 
-        public Garage<IEnumerable> CreateGarage(int forNoOfCars)
+        public static Garage CreateGarage(int forNoOfCars)
         {
-            Garage<IEnumerable> Garage = new Garage<IEnumerable>(forNoOfCars, UI);
+            Garage Garage = new Garage(forNoOfCars, UI);
 
             return Garage;
         }
             
-        private void AddTestVehicles(Garage<IEnumerable> Garage)
+        private static void AddTestVehicles(Garage Garage)
         {
             Car car = new Car("ABC 123", "Red", 4, "Electric");
-            Garage.AddVehicle(car);
+            Garage.Add(car);
 
             Airplane airplane = new Airplane("N628TS", "White", 6, 2);
-            Garage.AddVehicle(airplane);
+            Garage.Add(airplane);
 
             Motorcycle mc = new Motorcycle("Hej 999", "Green", 2, 1000);
-            Garage.AddVehicle(mc);
+            Garage.Add(mc);
 
-            Bus bus = new Bus("LED 147", "Red", 6, 65);
-            Garage.AddVehicle(bus);
+            Bus bus = new Bus("LED 947", "Red", 6, 65);
+            Garage.Add(bus);
 
             Boat boat = new Boat("Gh67", "White", 0, 27);
-            Garage.AddVehicle(boat);
+            Garage.Add(boat);
+
+            // Second set
+
+            car = new Car("ABC 123", "Yellow", 4, "Diesel");
+            Garage.Add(car);
+
+            airplane = new Airplane("J654SE", "Grey", 3, 1);
+            Garage.Add(airplane);
+
+            mc = new Motorcycle("Hayabusa", "Black", 2, 1340);
+            Garage.Add(mc);
+
+            new Bus("DFG 046", "Blue", 6, 120);
+            Garage.Add(bus);
+
+            boat = new Boat("JYF67", "White", 0, 5);
+            Garage.Add(boat);
 
         }
     }

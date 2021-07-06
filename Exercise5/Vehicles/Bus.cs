@@ -17,7 +17,7 @@ namespace Exercise5.Vehicles
 
         public override string ToString()
         {
-            return base.ToString() + " with " + NoOfSeats + " seats";
+            return base.ToString() + " and " + NoOfSeats + " seats";
         }
     }
 }

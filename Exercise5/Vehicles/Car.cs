@@ -17,7 +17,7 @@ namespace Exercise5.Vehicles
 
         public override string ToString()
         {
-            return base.ToString() + " and running on " + FuelType;
+            return base.ToString() + " running on " + FuelType + " power";
 
         }
     }
