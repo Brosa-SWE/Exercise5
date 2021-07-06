@@ -9,7 +9,10 @@ namespace Exercise5
     class Vehicle : Interfaces.IVehicle
 
     {
-   
+        public string RegNo { get; set; }
+        public string Color { get; set; }
+        public int NoOfWheels { get; set; }
+
         public Vehicle(string regNo, string color, int noOfWheels)
         {
             RegNo = regNo;
@@ -17,8 +20,9 @@ namespace Exercise5
             NoOfWheels = noOfWheels;
         }
 
-        public string RegNo { get; set; }
-        public string Color { get; set; }
-        public int NoOfWheels { get; set; }
+        public override string ToString()
+        {
+            return ($"{Color} {this.GetType()} with {NoOfWheels} wheels");
+        }
     }
 }

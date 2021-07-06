@@ -8,11 +8,17 @@ namespace Exercise5.Vehicles
 {
     class Car : Vehicle
     {
+        public string FuelType { get; set; }
+
         public Car(string regNo, string color, int noOfWheels, string fuelType) : base(regNo, color, noOfWheels)
         {
             FuelType = fuelType;
         }
 
-        public string FuelType { get; set; }
+        public override string ToString()
+        {
+            return base.ToString() + " and running on " + FuelType;
+
+        }
     }
 }

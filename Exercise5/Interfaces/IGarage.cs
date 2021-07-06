@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Exercise5
 {
-    interface IGarage
+    interface IGarage<IEnumerable>
     {
     }
 }
