@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 namespace Exercise5
 {
-    public delegate void GarageCarAdded(Object sender, GarageEventArgs eventArgs);
+    public delegate void GarageCarAdded(object sender, GarageEventArgs args);
 
 }

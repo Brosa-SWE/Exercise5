@@ -4,9 +4,7 @@ using System.Collections;
 namespace Exercise5
 {
     class Program
-    {
-       
-        
+    {   
         static void Main(string[] args)
         {
             Handler Handler = new Handler();
@@ -17,9 +15,6 @@ namespace Exercise5
             Handler.PrintGarage(Garage);
 
             Console.ReadKey();
-
         }
-
-
     }
 }

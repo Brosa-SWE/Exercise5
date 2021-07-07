@@ -17,7 +17,6 @@ namespace Exercise5
         private int VehicleCapacity;
         private Vehicle[] Vehicles;
         private List<string> RegNos = new List<string>();
-        private UI UI;
 
         public Garage(int vehicleCapacity)
         {
@@ -27,11 +26,11 @@ namespace Exercise5
             CarAdded = new GarageCarAdded(onCarAdded);
         }
 
-        static void onCarAdded(object sender, GarageEventArgs args)
+        public void onCarAdded(object sender, GarageEventArgs args)
         {
 
             Console.WriteLine("TEST WITH CW: " + args.Message);
-            // Todo: Write args.message to UI
+            // Todo: Write args.message to UI from Handler
         }
 
         public IEnumerator GetEnumerator()
@@ -64,7 +63,7 @@ namespace Exercise5
             }
             catch (GarageException e)
             {
-                // Todo: write e.Message to UI
+                // Todo: write e.Message to UI in Handler
                 Console.WriteLine("TEST WITH CW: " + e.Message);
 //                UI.WriteError(e.Message);
             }
@@ -112,11 +111,13 @@ namespace Exercise5
                 Vehicles = Vehicles.Where((source, index) => index != foundIndex).ToArray();
                 RegNos.Remove(vehicle.RegNo);
 
-                UI.WriteWarning($"Removed {vehicleInfo} from the Garage. The Garage now has {VehicleCapacity} vehicles left.");
+                // ToDo: Write from UI in Handler
+                //UI.WriteWarning($"Removed {vehicleInfo} from the Garage. The Garage now has {VehicleCapacity} vehicles left.");
             }
             else
             {
-                UI.Write("");
+                // ToDo: Write from UI in Handler
+                //UI.Write("");
             }
 
             return true;
@@ -124,20 +125,21 @@ namespace Exercise5
 
         public void PrintGarage()
         {
-            UI.Write(" ");
-            UI.Write("Garage Content");
-            UI.Write("==============");
+            // ToDo: Write from UI in Handler
+            //UI.Write(" ");
+            //UI.Write("Garage Content");
+            //UI.Write("==============");
 
-            foreach (Vehicle vehicle in Vehicles)
-            {
-                if (vehicle != null)
-                {
-                    UI.Write(vehicle.ToString());
-                }
-            }
+            //foreach (Vehicle vehicle in Vehicles)
+            //{
+            //    if (vehicle != null)
+            //    {
+            //        UI.Write(vehicle.ToString());
+            //    }
+            //}
 
-            UI.Write(" ");
-            UI.Write("Press any key to contine...");
+            //UI.Write(" ");
+            //UI.Write("Press any key to contine...");
         }
 
     }
@@ -160,8 +162,5 @@ namespace Exercise5
                 return errMessage;
             }
         }
-
     }
-
-
 }

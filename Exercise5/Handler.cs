@@ -21,9 +21,15 @@ namespace Exercise5
         {
             Garage Garage = new Garage(vehicleCapacity);
             Garages.Add(Garage);
+
+            Garage.onCarAdded = UiWrite;
             return Garage;
         }
 
+        private void UiWrite(object sender, GarageEventArgs args)
+        {
+            UI.Write(args.Message);
+        }
 
         public void PrintGarage(Garage Garage)
         {
