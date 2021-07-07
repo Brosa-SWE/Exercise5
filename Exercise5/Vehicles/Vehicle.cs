@@ -29,7 +29,7 @@ namespace Exercise5
                 wheelInfo = ($" with { NoOfWheels} wheels");
             }
 
-            return $"{Color} {VehicleType()}{wheelInfo}";
+            return $"{Color} {VehicleType()} {RegNo}{wheelInfo}";
         }
 
         public string VehicleType()

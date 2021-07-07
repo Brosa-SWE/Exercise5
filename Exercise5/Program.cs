@@ -10,6 +10,8 @@ namespace Exercise5
         
         static void Main(string[] args)
         {
+           // Hander Handler = new Handler(UI);
+
             Garage Garage = CreateGarage(9);
 
             AddTestVehicles(Garage);

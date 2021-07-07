@@ -11,15 +11,15 @@ namespace Exercise5
     //Todo: Add constraint "where.... "
     internal class Garage : IEnumerable // : IGarage<IEnumerable>
     {
-        private int GarageSize;
+        private int VehicleCapacity;
         private Vehicle[] Vehicles;
         private List<string> RegNos = new List<string>();
         private UI UI;
 
-        public Garage(int noOfVehicles, UI ui)
+        public Garage(int vehicleCapacity, UI ui)
         {
-            GarageSize = noOfVehicles;
-            Vehicles = new Vehicle[noOfVehicles];
+            VehicleCapacity = vehicleCapacity;
+            Vehicles = new Vehicle[vehicleCapacity];
             UI = ui;
         }
 
@@ -54,7 +54,7 @@ namespace Exercise5
 
             if (AddedVehicle == true)
             {
-                UI.Write("Added " + vehicle + " to the Garage");
+                UI.Write($"Added {vehicle} to the Garage");
             }
  
             return AddedVehicle;
@@ -70,9 +70,9 @@ namespace Exercise5
             }
 
             // Ensure space available in the Garage
-            if (RegNos.Count == GarageSize)
+            if (RegNos.Count == VehicleCapacity)
             {
-                throw new GarageException(999, ($"The Garage is full (Max {GarageSize} vehicles, so the {vehicle.Color} {vehicle.VehicleType()} cannot be added."));
+                throw new GarageException(999, ($"The Garage is full (Max {VehicleCapacity} vehicles, so the {vehicle.Color} {vehicle.VehicleType()} {vehicle.RegNo} cannot be added."));
             }
             
             // All Good
@@ -100,7 +100,7 @@ namespace Exercise5
                 Vehicles = Vehicles.Where((source, index) => index != foundIndex).ToArray();
                 RegNos.Remove(vehicle.RegNo);
 
-                UI.Write($"Removed {vehicleInfo} from the Garage. The Garage now has {GarageSize} vehicles left.");
+                UI.WriteWarning($"Removed {vehicleInfo} from the Garage. The Garage now has {VehicleCapacity} vehicles left.");
             }
             else
             {

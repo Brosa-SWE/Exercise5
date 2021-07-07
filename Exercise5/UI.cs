@@ -12,7 +12,12 @@ namespace Exercise5
         {
             Console.WriteLine(messageToWrite);
         }
-
+        internal void WriteWarning(string messageToWrite)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(messageToWrite);
+            Console.ForegroundColor = ConsoleColor.White;
+        }
         internal void WriteError(string messageToWrite)
         {
             Console.ForegroundColor = ConsoleColor.Red;
