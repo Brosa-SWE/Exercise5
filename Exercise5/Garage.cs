@@ -9,18 +9,29 @@ using System.Threading.Tasks;
 namespace Exercise5
 {
     //Todo: Add constraint "where.... "
+    //Todo: Change to IEnumerable<T>
     internal class Garage : IEnumerable // : IGarage<IEnumerable>
     {
+        public event GarageCarAdded CarAdded;
+
         private int VehicleCapacity;
         private Vehicle[] Vehicles;
         private List<string> RegNos = new List<string>();
         private UI UI;
 
-        public Garage(int vehicleCapacity, UI ui)
+        public Garage(int vehicleCapacity)
         {
             VehicleCapacity = vehicleCapacity;
             Vehicles = new Vehicle[vehicleCapacity];
-            UI = ui;
+
+            CarAdded = new GarageCarAdded(onCarAdded);
+        }
+
+        static void onCarAdded(object sender, GarageEventArgs args)
+        {
+
+            Console.WriteLine("TEST WITH CW: " + args.Message);
+            // Todo: Write args.message to UI
         }
 
         public IEnumerator GetEnumerator()
@@ -30,34 +41,35 @@ namespace Exercise5
 
         public bool Add(Vehicle vehicle)
         {
-            bool AddedVehicle = false;
-
             try
             {
-                IsVehicleAllowedToBeAddedToTheGarage(vehicle);
+                if (IsVehicleAllowedToBeAddedToTheGarage(vehicle))
+                {
+                    for (int i = 0; i < Vehicles.Length; i++)
+                    {
+                        if (Vehicles[i] == null)
+                        {
+                            Vehicles[i] = vehicle;
+                            RegNos.Add(vehicle.RegNo);
+
+                            GarageEventArgs args = new GarageEventArgs();
+                            args.Message = $"Added {vehicle} to the Garage";
+
+                            CarAdded(this, args);
+
+                            return true;
+                        }
+                    }
+                }
             }
             catch (GarageException e)
             {
-                UI.WriteError(e.Message);
+                // Todo: write e.Message to UI
+                Console.WriteLine("TEST WITH CW: " + e.Message);
+//                UI.WriteError(e.Message);
             }
 
-            for (int i = 0; i < Vehicles.Length; i++)
-            {
-                if (Vehicles[i] == null)
-                {
-                    Vehicles[i] = vehicle;
-                    AddedVehicle = true;
-                    RegNos.Add(vehicle.RegNo);
-                    break;
-                }
-            }
-
-            if (AddedVehicle == true)
-            {
-                UI.Write($"Added {vehicle} to the Garage");
-            }
- 
-            return AddedVehicle;
+            return false;
         }
 
         // Verify that all is Good
