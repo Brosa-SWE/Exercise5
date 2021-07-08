@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Exercise5.Vehicles;
+using static Exercise5.Delegates;
 
 namespace Exercise5
 {
@@ -20,15 +21,31 @@ namespace Exercise5
         public Garage CreateGarage(string name, int vehicleCapacity)
         {
             Garage Garage = new Garage(vehicleCapacity);
+
+            Garage.UIwrite += new UIwriteDelegate(onUIwrite);
+            Garage.UIwriteWarning += new UIwriteWarningDelegate(onUIwriteWarning);
+            Garage.UIwriteError += new UIwriteErrorDelegate(onUIwriteError);
+
+            // Add new Garage to the List of Garages
             Garages.Add(Garage);
 
-            Garage.onCarAdded = UiWrite;
+            // Write to UI in Handler
             return Garage;
         }
 
-        private void UiWrite(object sender, GarageEventArgs args)
+        public void onUIwrite(string message)
         {
-            UI.Write(args.Message);
+            UI.Write(message);
+        }
+
+        public void onUIwriteWarning(string message)
+        {
+            UI.WriteWarning(message);
+        }
+
+        public void onUIwriteError(string message)
+        {
+            UI.WriteError(message);
         }
 
         public void PrintGarage(Garage Garage)
@@ -37,13 +54,13 @@ namespace Exercise5
             UI.Write("Garage Content");
             UI.Write("==============");
 
-            //foreach (Vehicle Vehicle in Garage.Vehicles)
-            //{
-            //    if (Garage != null)
-            //    {
-            //        UI.Write(Garage.ToString());
-            //    }
-            //}
+            foreach (Vehicle Vehicle in Garage)
+            {
+                if (Garage != null)
+                {
+                    UI.Write(Vehicle.ToString());
+                }
+            }
 
             UI.Write(" ");
             UI.Write("Press any key to contine...");

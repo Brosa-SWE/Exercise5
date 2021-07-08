@@ -12,7 +12,8 @@ namespace Exercise5
 
             Handler.AddTestVehicles(Garage);
 
-            Handler.PrintGarage(Garage);
+            //Handler.PrintGarage(Garage);
+            Garage.PrintGarage();
 
             Console.ReadKey();
         }

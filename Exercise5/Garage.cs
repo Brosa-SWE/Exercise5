@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using static Exercise5.Delegates;
 
 namespace Exercise5
 {
@@ -12,7 +13,9 @@ namespace Exercise5
     //Todo: Change to IEnumerable<T>
     internal class Garage : IEnumerable // : IGarage<IEnumerable>
     {
-        public event GarageCarAdded CarAdded;
+        public event UIwriteDelegate UIwrite;
+        public event UIwriteErrorDelegate UIwriteError;
+        public event UIwriteWarningDelegate  UIwriteWarning;
 
         private int VehicleCapacity;
         private Vehicle[] Vehicles;
@@ -23,19 +26,16 @@ namespace Exercise5
             VehicleCapacity = vehicleCapacity;
             Vehicles = new Vehicle[vehicleCapacity];
 
-            CarAdded = new GarageCarAdded(onCarAdded);
         }
 
-        public void onCarAdded(object sender, GarageEventArgs args)
-        {
-
-            Console.WriteLine("TEST WITH CW: " + args.Message);
-            // Todo: Write args.message to UI from Handler
-        }
+ 
 
         public IEnumerator GetEnumerator()
         {
-            throw new NotImplementedException();
+            foreach (Vehicle vehicle in Vehicles)
+            {
+                yield return vehicle;
+            }
         }
 
         public bool Add(Vehicle vehicle)
@@ -51,10 +51,7 @@ namespace Exercise5
                             Vehicles[i] = vehicle;
                             RegNos.Add(vehicle.RegNo);
 
-                            GarageEventArgs args = new GarageEventArgs();
-                            args.Message = $"Added {vehicle} to the Garage";
-
-                            CarAdded(this, args);
+                            UIwrite($"Added {vehicle} to the GaraGe");
 
                             return true;
                         }
@@ -63,9 +60,7 @@ namespace Exercise5
             }
             catch (GarageException e)
             {
-                // Todo: write e.Message to UI in Handler
-                Console.WriteLine("TEST WITH CW: " + e.Message);
-//                UI.WriteError(e.Message);
+                UIwriteError(e.Message);
             }
 
             return false;
@@ -111,13 +106,11 @@ namespace Exercise5
                 Vehicles = Vehicles.Where((source, index) => index != foundIndex).ToArray();
                 RegNos.Remove(vehicle.RegNo);
 
-                // ToDo: Write from UI in Handler
-                //UI.WriteWarning($"Removed {vehicleInfo} from the Garage. The Garage now has {VehicleCapacity} vehicles left.");
+                UIwriteWarning($"Removed {vehicleInfo} from the Garage. The Garage now has {VehicleCapacity} vehicles left.");
             }
             else
             {
-                // ToDo: Write from UI in Handler
-                //UI.Write("");
+                UIwriteError($"{vehicleInfo} to be removed was not found in the Garage.");
             }
 
             return true;
@@ -125,21 +118,20 @@ namespace Exercise5
 
         public void PrintGarage()
         {
-            // ToDo: Write from UI in Handler
-            //UI.Write(" ");
-            //UI.Write("Garage Content");
-            //UI.Write("==============");
+            UIwrite(" ");
+            UIwrite("Garage Content");
+            UIwrite("==============");
 
-            //foreach (Vehicle vehicle in Vehicles)
-            //{
-            //    if (vehicle != null)
-            //    {
-            //        UI.Write(vehicle.ToString());
-            //    }
-            //}
+            foreach (Vehicle vehicle in Vehicles)
+            {
+                if (vehicle != null)
+                {
+                    UIwrite(vehicle.ToString());
+                }
+            }
 
-            //UI.Write(" ");
-            //UI.Write("Press any key to contine...");
+            UIwrite(" ");
+            UIwrite("Press any key to contine...");
         }
 
     }
