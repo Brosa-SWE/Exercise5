@@ -14,42 +14,52 @@ namespace Exercise5
         Garage Garage;
 
         Menu MainMenu;
-        
+        Menu VehicleTypeMenu;
+
+
 
         public Manager()
         {
             UI = new UI();
             Handler = new Handler(UI);
-            Garage = Handler.CreateGarage("Elefanten", 9);
+
+            MainMenu = CreateMainMenu();
+            VehicleTypeMenu = CreateVehicleTypeMenu();
         }
 
 
         public void Run()
         {
-            MainMenu = CreateMainMenu();
-            string input = MainMenu.DisplayAndGetUserInput();
 
-            switch (input)
+            while (true)
             {
-                case "1":
-                    Handler.CreateGarage();
-                    break;
 
-                case "2":
+                string input = MainMenu.DisplayAndGetUserInput();
 
-                    break;
+                switch (input)
+                {
+                    case "1":
+                        Handler.CreateGarage();
+                        break;
 
-                case "3":
-                    Handler.PrintGarage();
-                    break;
+                    case "2":
+                        string vehicleType = VehicleTypeMenu.DisplayAndGetUserInput();
 
-                case "9":
-                    Handler.AddTestVehicles();
-                    break;
+                        Handler.ParkVehicle(vehicleType);
+                        break;
 
-                case "0":
-                    Environment.Exit(0);
-                    break;
+                    case "3":
+                        Handler.PrintGarage();
+                        break;
+
+                    case "9":
+                        Handler.AddTestVehicles();
+                        break;
+
+                    case "0":
+                        UI.ExitApplication();
+                        break;
+                }
             }
         }
 
@@ -68,8 +78,17 @@ namespace Exercise5
 
             return MainMenu;
         }
- 
 
+        private Menu CreateVehicleTypeMenu()
+        {
+            Menu Menu = new Menu(UI, "Select Vehicle Type");
+            Menu.AddItem("1", "Car");
+            Menu.AddItem("2", "Motorcyle");
+            Menu.AddItem("3", "Bus");
+            Menu.AddItem("4", "Boat");
+            Menu.AddItem("5", "Airplane");
 
+            return Menu;
+        }
     }
 }

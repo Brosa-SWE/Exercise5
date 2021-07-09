@@ -39,6 +39,8 @@ namespace Exercise5
             {
                 UI.Write($"{menuItem.OptionKey}\t{menuItem.OptionLabel}");
             }
+
+            UI.Write(" ");
         }
 
         public string GetUserMenuSelection()

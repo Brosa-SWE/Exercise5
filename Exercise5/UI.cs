@@ -40,7 +40,19 @@ namespace Exercise5
             }
         }
 
-        public int GetUserInputInteger(string customPrompt, int minimumValue, int maximumValue)
+        public int GetUserInputInt(string customPrompt, bool clearScreenBetweenTries, int minimumValue, int maximumValue)
+        {
+            if (clearScreenBetweenTries)
+            {
+                ClearScreen();
+            }
+
+            Write(customPrompt);
+
+            return GetUserInputInt(minimumValue, maximumValue);
+        }
+
+        public int GetUserInputInt(int minimumValue, int maximumValue)
         {
             string input = "";
 
@@ -48,8 +60,6 @@ namespace Exercise5
             {
                 try
                 {
-                    ClearScreen();
-                    Write(customPrompt);
                     input = ReadLine();
                 }
                 catch (IndexOutOfRangeException) //If the input line is empty, we ask the users for some input.
@@ -98,6 +108,53 @@ namespace Exercise5
             return Console.ReadLine();
         }
 
+        internal void DisplaySuccess(string customPrompt)
+        {
+            Console.OutputEncoding = System.Text.Encoding.GetEncoding(28591);
+
+            List<string> outputFrame = GetFrame(customPrompt);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            foreach (string lineToWrite in outputFrame)
+            {
+                Write(lineToWrite);
+            }
+            Console.ForegroundColor = ConsoleColor.White;
+
+            WaitForKey("Press any key to continue...");
+        }
+        internal void ShowResult(string customPrompt)
+        {
+            string frame = new String('=', customPrompt.Length + 4);
+
+            Console.ForegroundColor = ConsoleColor.Green;
+            Write(" ");
+            Write(frame);
+            Write($"= { customPrompt} =");
+            Write(frame);
+            Console.ForegroundColor = ConsoleColor.White;
+
+            WaitForKey("Press any key to continue...");
+        }
+
+        internal List<string> GetFrame(string customPrompt)
+        {
+            List<string> result = new List<string>();
+
+            int topleft = 218;
+            int hline = 196;
+            int topright = 191;
+            int vline = 179;
+            int bottomleft = 192;
+            int bottomright = 217;
+
+            result.Add(topleft + new String((char)hline, customPrompt.Length + 4) + topright);
+            result.Add((char)vline + " " + customPrompt + " " + (char)vline);
+            result.Add(bottomleft + new String((char)hline, customPrompt.Length + 4) + bottomright);
+
+            return result;
+        }
+
         internal void ClearScreen()
         {
             Console.Clear();
@@ -113,6 +170,11 @@ namespace Exercise5
             Write(" ");
             Write(customPrompt);
             WaitForKey();
+        }
+
+        internal void ExitApplication()
+        {
+            Environment.Exit(0);
         }
     }
 }

@@ -20,14 +20,73 @@ namespace Exercise5
 
         public Garage CreateGarage()
         {
-            int vehicleCapacity = UI.GetUserInputInteger("Vehicle Capacity for the new Garage: ", 1, 10);
+            int vehicleCapacity = UI.GetUserInputInt("Vehicle Capacity for the new Garage: ", true, 1, 10);
 
             Garage = new Garage(vehicleCapacity);
+
+            // UI.ShowResult($"Garage for {vehicleCapacity} vehicles created!");
+            UI.DisplaySuccess($"Garage for {vehicleCapacity} vehicles created!");
 
             return Garage;
         }
 
-         public void PrintGarage()
+        public bool ParkVehicle(string vehicleType)
+        {
+
+            while (true)
+            {
+                // ======================
+                // Registration Number
+                // ======================
+                string RegNo = UI.GetUserInputString("Enter Registration Number or 0 to Exit to Main Menu: ", true);
+
+                if (RegNo == "0") { return false; }
+
+                if (Garage.HasRegNo(RegNo))
+                {
+                    // UI.WriteWarning($"Registration Number {RegNo} is already parked in the Garage");
+                    return false;
+                }
+
+                // ======================
+                // Rest of common Vehicle Data
+                // ======================
+                string Color = UI.GetUserInputString("Enter Color: ", false);
+
+                int Wheels = UI.GetUserInputInt("Enter no of Wheels: ", false, 0, 50);
+
+                // ======================
+                // Vehicle Type Unique Data
+                // ======================
+
+                switch (vehicleType)
+                {
+                    case "1":
+
+                        break;
+
+                    case "2":
+
+                        break;
+
+                    case "3":
+
+                        break;
+                }
+
+                // ======================
+                // Park Vehicle in Garage
+                // ======================
+                Vehicle Vehicle = new Vehicle(RegNo, Color, Wheels);
+                Garage.Add(Vehicle);
+
+                UI.ShowResult($"Added {Vehicle} to the Garage.");
+
+                return true;
+            }
+        }
+
+        public void PrintGarage()
         {
             UI.Write(" ");
             UI.Write($"Garage Content (Usuage: {Garage.Count}/{Garage.VehicleCapacity})");
@@ -117,7 +176,7 @@ namespace Exercise5
             }
             else
             {
-                UI.Write("Garage does NOT have RegNo "+ regNo);
+                UI.Write("Garage does NOT have RegNo " + regNo);
             }
 
             regNo = "NisseGurra Aktersnurra";

@@ -43,7 +43,7 @@ namespace Exercise5
 
         public bool HasRegNo(string RegNo)
         {
-            var Match = Vehicles.FirstOrDefault(vehicle => vehicle.RegNo == RegNo);
+            var Match = Vehicles.FirstOrDefault(vehicle => vehicle?.RegNo == RegNo);
 
             return Match != null;
         }
