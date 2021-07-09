@@ -18,8 +18,10 @@ namespace Exercise5
             UI = ui;
         }
 
-        public Garage CreateGarage(string name, int vehicleCapacity)
+        public Garage CreateGarage()
         {
+            int vehicleCapacity = UI.GetUserInputInteger("Vehicle Capacity for the new Garage: ", 1, 10);
+
             Garage = new Garage(vehicleCapacity);
 
             return Garage;
@@ -111,22 +113,22 @@ namespace Exercise5
             string regNo = "JYF67";
             if (Garage.HasRegNo(regNo))
             {
-                Console.WriteLine("Garage has RegNo " + regNo);
+                UI.Write("Garage has RegNo " + regNo);
             }
             else
             {
-                Console.WriteLine("Garage does NOT have RegNo "+ regNo);
+                UI.Write("Garage does NOT have RegNo "+ regNo);
             }
 
             regNo = "NisseGurra Aktersnurra";
 
             if (Garage.HasRegNo(regNo))
             {
-                Console.WriteLine("Garage has RegNo " + regNo);
+                UI.Write("Garage has RegNo " + regNo);
             }
             else
             {
-                Console.WriteLine("Garage does NOT have RegNo " + regNo);
+                UI.Write("Garage does NOT have RegNo " + regNo);
             }
 
         }

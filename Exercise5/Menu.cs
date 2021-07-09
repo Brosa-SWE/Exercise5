@@ -23,7 +23,7 @@ namespace Exercise5
         public string DisplayAndGetUserInput()
         {
             Display();
-            return GetUserInput();
+            return GetUserMenuSelection();
         }
 
         public void Display()
@@ -41,7 +41,7 @@ namespace Exercise5
             }
         }
 
-        public string GetUserInput()
+        public string GetUserMenuSelection()
         {
             string input = "";
 
@@ -49,7 +49,7 @@ namespace Exercise5
             {
                 try
                 {
-                    input = UI.ReadLine();
+                    input = UI.GetUserInputString();
                 }
                 catch (IndexOutOfRangeException) //If the input line is empty, we ask the users for some input.
                 {
@@ -66,42 +66,6 @@ namespace Exercise5
                     UI.WaitForKey($"Please enter a valid input ({String.Join(", ", ValidOptions)})");
                 }
 
-            }
-        }
-
-        public int GetUserInputInteger(string customPrompt, int minimumValue, int maximumValue)
-        {
-            string input = "";
-
-            while (true)
-            {
-                try
-                {
-                    UI.ClearScreen();
-                    UI.Write(customPrompt);
-                    input = UI.ReadLine();
-                }
-                catch (IndexOutOfRangeException) //If the input line is empty, we ask the users for some input.
-                {
-                    input = "<INVALID>"; // Value to provoke invalid option below
-                }
-
-                int inputInt;
-
-                if (!int.TryParse(input, out inputInt))
-                {
-                    inputInt = minimumValue - 1;
-                }
-
-                if (inputInt < minimumValue || inputInt > maximumValue)
-                {
-                    UI.ClearScreen();
-                    UI.WaitForKey($"Valid input is {minimumValue} - {maximumValue}, press any key to try again."); 
-                }
-                else
-                {
-                    return inputInt;
-                }
             }
         }
 

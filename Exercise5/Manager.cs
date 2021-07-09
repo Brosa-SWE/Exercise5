@@ -21,24 +21,18 @@ namespace Exercise5
             UI = new UI();
             Handler = new Handler(UI);
             Garage = Handler.CreateGarage("Elefanten", 9);
-
-            MainMenu = CreateMainMenu();
-
-            int inputInt = MainMenu.GetUserInputInteger("Garage Capacity: (1-10)", 1, 10);
-
-            UI.Write(inputInt.ToString());
-            UI.WaitForKey();
         }
 
 
         public void Run()
         {
+            MainMenu = CreateMainMenu();
             string input = MainMenu.DisplayAndGetUserInput();
 
             switch (input)
             {
                 case "1":
-
+                    Handler.CreateGarage();
                     break;
 
                 case "2":

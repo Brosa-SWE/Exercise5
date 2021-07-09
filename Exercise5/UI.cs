@@ -8,6 +8,73 @@ namespace Exercise5
 {
     class UI : IUI
     {
+        public string GetUserInputString(string customPrompt, bool clearScreenBetweenTries)
+        {
+            if (clearScreenBetweenTries)
+            {
+                ClearScreen();
+            }
+
+            Write(customPrompt);
+
+            return GetUserInputString();
+        }
+
+        public string GetUserInputString()
+        {
+            string input = "";
+
+            while (true)
+            {
+                try
+                {
+                    input = ReadLine();
+                }
+                catch (IndexOutOfRangeException) //If the input line is empty, we ask the users for some input.
+                {
+                    input = "<INVALID>"; // Value to provoke invalid option below
+                }
+
+                return input;
+
+            }
+        }
+
+        public int GetUserInputInteger(string customPrompt, int minimumValue, int maximumValue)
+        {
+            string input = "";
+
+            while (true)
+            {
+                try
+                {
+                    ClearScreen();
+                    Write(customPrompt);
+                    input = ReadLine();
+                }
+                catch (IndexOutOfRangeException) //If the input line is empty, we ask the users for some input.
+                {
+                    input = "<INVALID>"; // Value to provoke invalid option below
+                }
+
+                int inputInt;
+
+                if (!int.TryParse(input, out inputInt))
+                {
+                    inputInt = minimumValue - 1;
+                }
+
+                if (inputInt < minimumValue || inputInt > maximumValue)
+                {
+                    ClearScreen();
+                    WaitForKey($"Valid input is {minimumValue} - {maximumValue}, press any key to try again.");
+                }
+                else
+                {
+                    return inputInt;
+                }
+            }
+        }
 
         public void Write(string messageToWrite)
         {
