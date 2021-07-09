@@ -8,6 +8,11 @@ namespace Exercise5
 {
     class UI : IUI
     {
+
+
+
+ 
+
         public void Write(string messageToWrite)
         {
             Console.WriteLine(messageToWrite);
@@ -23,6 +28,23 @@ namespace Exercise5
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(messageToWrite);
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        internal void ClearScreen()
+        {
+            Console.Clear();
+        }
+
+        internal void WaitForKey()
+        {
+            Console.ReadKey();
+        }
+
+        internal void WaitForKey(string customPrompt)
+        {
+            Write(" ");
+            Write(customPrompt);
+            WaitForKey();
         }
     }
 }

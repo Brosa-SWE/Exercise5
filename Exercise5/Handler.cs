@@ -10,49 +10,26 @@ namespace Exercise5
 {
     class Handler
     {
-        private List<Garage> Garages = new List<Garage>();
-        private static UI UI = new UI();
+        private Garage Garage;
+        private static UI UI;
 
-        public Handler()
+        public Handler(UI ui)
         {
-          
+            UI = ui;
         }
 
         public Garage CreateGarage(string name, int vehicleCapacity)
         {
-            Garage Garage = new Garage(vehicleCapacity);
+            Garage = new Garage(vehicleCapacity);
 
-            Garage.UIwrite += new UIwriteDelegate(onUIwrite);
-            Garage.UIwriteWarning += new UIwriteWarningDelegate(onUIwriteWarning);
-            Garage.UIwriteError += new UIwriteErrorDelegate(onUIwriteError);
-
-            // Add new Garage to the List of Garages
-            Garages.Add(Garage);
-
-            // Write to UI in Handler
             return Garage;
         }
 
-        public void onUIwrite(string message)
-        {
-            UI.Write(message);
-        }
-
-        public void onUIwriteWarning(string message)
-        {
-            UI.WriteWarning(message);
-        }
-
-        public void onUIwriteError(string message)
-        {
-            UI.WriteError(message);
-        }
-
-        public void PrintGarage(Garage Garage)
+         public void PrintGarage()
         {
             UI.Write(" ");
-            UI.Write("Garage Content");
-            UI.Write("==============");
+            UI.Write($"Garage Content (Usuage: {Garage.Count}/{Garage.VehicleCapacity})");
+            UI.Write("==============================================");
 
             foreach (Vehicle Vehicle in Garage)
             {
@@ -66,39 +43,91 @@ namespace Exercise5
             UI.Write("Press any key to contine...");
         }
 
-        public void AddTestVehicles(Garage Garage)
+        public bool Add(Vehicle vehicle)
+        {
+            if (Garage.Add(vehicle))
+            {
+                UI.Write($"Added {vehicle} to the Garage");
+                return true;
+            }
+            else
+            {
+                UI.WriteWarning($"{vehicle} NOT added to the Garage");
+                return false;
+            }
+        }
+
+        public bool Remove(Vehicle vehicle)
+        {
+            if (Garage.Remove(vehicle))
+            {
+                UI.WriteWarning($"Removed {vehicle} from the Garage. The Garage now has {Garage.Count} vehicles left.");
+                return true;
+            }
+            else
+            {
+                UI.WriteError($"{vehicle} to be removed was not found in the Garage.");
+                return false;
+            }
+        }
+
+        public void AddTestVehicles()
         {
             Car car = new Car("ABC 123", "Red", 4, "Electric");
-            Garage.Add(car);
+            Add(car);
 
             Airplane airplane = new Airplane("N628TS", "White", 6, 2);
-            Garage.Add(airplane);
+            Add(airplane);
 
             Motorcycle mc = new Motorcycle("Hej 999", "Green", 2, 1000);
-            Garage.Add(mc);
+            Add(mc);
 
             Bus bus = new Bus("LED 947", "Red", 6, 65);
-            Garage.Add(bus);
+            Add(bus);
 
             Boat boat = new Boat("Gh67", "White", 0, 27);
-            Garage.Add(boat);
+            Add(boat);
 
             // Second set
 
             car = new Car("ABC 123", "Yellow", 4, "Diesel");
-            Garage.Add(car);
+            Add(car);
 
             airplane = new Airplane("J654SE", "Grey", 3, 1);
-            Garage.Add(airplane);
+            Add(airplane);
+
+            // Remove something
+            Remove(boat);
 
             mc = new Motorcycle("Hayabusa", "Black", 2, 1340);
-            Garage.Add(mc);
+            Add(mc);
 
             new Bus("DFG 046", "Blue", 6, 120);
-            Garage.Add(bus);
+            Add(bus);
 
             boat = new Boat("JYF67", "White", 0, 5);
-            Garage.Add(boat);
+            Add(boat);
+
+            string regNo = "JYF67";
+            if (Garage.HasRegNo(regNo))
+            {
+                Console.WriteLine("Garage has RegNo " + regNo);
+            }
+            else
+            {
+                Console.WriteLine("Garage does NOT have RegNo "+ regNo);
+            }
+
+            regNo = "NisseGurra Aktersnurra";
+
+            if (Garage.HasRegNo(regNo))
+            {
+                Console.WriteLine("Garage has RegNo " + regNo);
+            }
+            else
+            {
+                Console.WriteLine("Garage does NOT have RegNo " + regNo);
+            }
 
         }
 

@@ -15,20 +15,19 @@ namespace Exercise5
     {
         public event UIwriteDelegate UIwrite;
         public event UIwriteErrorDelegate UIwriteError;
-        public event UIwriteWarningDelegate  UIwriteWarning;
+        public event UIwriteWarningDelegate UIwriteWarning;
 
-        private int VehicleCapacity;
+        private int _vehicleCapacity;
+        public int VehicleCapacity { get { return _vehicleCapacity; } }
+
         private Vehicle[] Vehicles;
-        private List<string> RegNos = new List<string>();
 
         public Garage(int vehicleCapacity)
         {
-            VehicleCapacity = vehicleCapacity;
+            _vehicleCapacity = vehicleCapacity;
             Vehicles = new Vehicle[vehicleCapacity];
 
         }
-
- 
 
         public IEnumerator GetEnumerator()
         {
@@ -38,100 +37,66 @@ namespace Exercise5
             }
         }
 
+        public int Count { get { return Vehicles.Length; } }
+
+        public int FreeSpaces { get { return VehicleCapacity - Count; } }
+
+        public bool HasRegNo(string RegNo)
+        {
+            var Match = Vehicles.FirstOrDefault(vehicle => vehicle.RegNo == RegNo);
+
+            return Match != null;
+        }
+
+        public bool IsFull()
+        {
+            return VehicleCapacity == Count;
+        }
+
         public bool Add(Vehicle vehicle)
         {
             try
             {
-                if (IsVehicleAllowedToBeAddedToTheGarage(vehicle))
+                if (vehicle == null)
                 {
-                    for (int i = 0; i < Vehicles.Length; i++)
-                    {
-                        if (Vehicles[i] == null)
-                        {
-                            Vehicles[i] = vehicle;
-                            RegNos.Add(vehicle.RegNo);
-
-                            UIwrite($"Added {vehicle} to the GaraGe");
-
-                            return true;
-                        }
-                    }
+                    throw new GarageException(9999, "Vehicle object was null in Add method");
                 }
             }
             catch (GarageException e)
             {
                 UIwriteError(e.Message);
+                return false;
             }
 
-            return false;
-        }
-
-        // Verify that all is Good
-        private bool IsVehicleAllowedToBeAddedToTheGarage(Vehicle vehicle)
-        {
-            // Ensure unique Reg Nos
-            if (RegNos.Contains(vehicle.RegNo))
+            // Add vehicle to first free spot
+            for (int i = 0; i < Vehicles.Length; i++)
             {
-                throw new GarageException(999, ($"RegNo {vehicle.RegNo} is already in the Garage so the {vehicle.Color} {vehicle.VehicleType()} cannot be added."));
+                if (Vehicles[i] == null)
+                {
+                    Vehicles[i] = vehicle;
+                                   
+                    break;
+                 
+                }
             }
 
-            // Ensure space available in the Garage
-            if (RegNos.Count == VehicleCapacity)
-            {
-                throw new GarageException(999, ($"The Garage is full (Max {VehicleCapacity} vehicles, so the {vehicle.Color} {vehicle.VehicleType()} {vehicle.RegNo} cannot be added."));
-            }
-            
-            // All Good
             return true;
         }
 
-        public bool RemoveVehicle(Vehicle vehicle)
-        {
-            int foundIndex = 0;
-            bool foundVehicle = false;
-            string vehicleInfo = vehicle.ToString();
 
+        public bool Remove(Vehicle vehicle)
+        {
+         
             for (int i = 0; i < Vehicles.Length; i++)
             {
                 if (Vehicles[i] == vehicle)
                 {
-                    foundIndex = i;
-                    foundVehicle = true;
-                    break;
+                    Vehicles = Vehicles.Where((source, index) => index != i).ToArray();
+                    return true;
                 }
             }
 
-            if (foundVehicle)
-            {
-                Vehicles = Vehicles.Where((source, index) => index != foundIndex).ToArray();
-                RegNos.Remove(vehicle.RegNo);
-
-                UIwriteWarning($"Removed {vehicleInfo} from the Garage. The Garage now has {VehicleCapacity} vehicles left.");
-            }
-            else
-            {
-                UIwriteError($"{vehicleInfo} to be removed was not found in the Garage.");
-            }
-
-            return true;
-        }
-
-        public void PrintGarage()
-        {
-            UIwrite(" ");
-            UIwrite("Garage Content");
-            UIwrite("==============");
-
-            foreach (Vehicle vehicle in Vehicles)
-            {
-                if (vehicle != null)
-                {
-                    UIwrite(vehicle.ToString());
-                }
-            }
-
-            UIwrite(" ");
-            UIwrite("Press any key to contine...");
+            return false;
         }
 
     }

@@ -7,15 +7,9 @@ namespace Exercise5
     {   
         static void Main(string[] args)
         {
-            Handler Handler = new Handler();
-            Garage Garage = Handler.CreateGarage("Elefanten", 9);
-
-            Handler.AddTestVehicles(Garage);
-
-            //Handler.PrintGarage(Garage);
-            Garage.PrintGarage();
-
-            Console.ReadKey();
+            Manager Manager = new Manager();
+            Manager.Run();
+            
         }
     }
 }
