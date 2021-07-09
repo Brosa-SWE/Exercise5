@@ -14,7 +14,7 @@ namespace Exercise5
         Garage Garage;
 
         Menu MainMenu;
-        Menu SubMenuAdd;
+        
 
         public Manager()
         {
@@ -23,8 +23,11 @@ namespace Exercise5
             Garage = Handler.CreateGarage("Elefanten", 9);
 
             MainMenu = CreateMainMenu();
-            SubMenuAdd = CreateSubMenuAdd();
 
+            int inputInt = MainMenu.GetUserInputInteger("Garage Capacity: (1-10)", 1, 10);
+
+            UI.Write(inputInt.ToString());
+            UI.WaitForKey();
         }
 
 
@@ -59,28 +62,19 @@ namespace Exercise5
         private Menu CreateMainMenu()
         {
             Menu MainMenu = new Menu(UI, "Garage Management System V1.0");
-           
-            MainMenu.AddItem("1","Park Vehicle");
-            MainMenu.AddItem("2","Remove Vehicle");
-            MainMenu.AddItem("3","List parked Vehicles");
+
+            MainMenu.AddItem("1", "Create Garage");
+            MainMenu.AddItem("2", "Park Vehicle");
+            MainMenu.AddItem("3", "Remove Vehicle");
+            MainMenu.AddItem("4", "Search/List parked Vehicles");
             MainMenu.AddEmptyLine();
             MainMenu.AddItem("9", "Add Test Data Vehicles");
             MainMenu.AddEmptyLine();
-            MainMenu.AddItem("0","Exit Application");
+            MainMenu.AddItem("0", "Exit Application");
 
             return MainMenu;
         }
-        private Menu CreateSubMenuAdd()
-        {
-            Menu SubMenuAdd = new Menu(UI, "Add Vehicle to the Garage");
-
-            SubMenuAdd.AddItem("1", "");
-
-            return SubMenuAdd;
-
-        }
-
-  
+ 
 
 
     }

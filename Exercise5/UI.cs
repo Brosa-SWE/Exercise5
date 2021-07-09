@@ -9,10 +9,6 @@ namespace Exercise5
     class UI : IUI
     {
 
-
-
- 
-
         public void Write(string messageToWrite)
         {
             Console.WriteLine(messageToWrite);
@@ -28,6 +24,11 @@ namespace Exercise5
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(messageToWrite);
             Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        internal string ReadLine()
+        {
+            return Console.ReadLine();
         }
 
         internal void ClearScreen()
