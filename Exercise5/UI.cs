@@ -110,49 +110,56 @@ namespace Exercise5
 
         internal void DisplaySuccess(string customPrompt)
         {
-            Console.OutputEncoding = System.Text.Encoding.GetEncoding(28591);
+            ConsoleColor consoleColor = ConsoleColor.Green;
 
-            List<string> outputFrame = GetFrame(customPrompt);
+            ShowAlert(customPrompt, consoleColor);
 
-            Console.ForegroundColor = ConsoleColor.Green;
-            foreach (string lineToWrite in outputFrame)
+        }
+
+        internal void DisplayWarning(string customPrompt)
+        {
+            ConsoleColor consoleColor = ConsoleColor.DarkYellow;
+
+            ShowAlert(customPrompt, consoleColor);
+
+        }
+
+        internal void DisplayFailure(string customPrompt)
+        {
+            ConsoleColor consoleColor = ConsoleColor.Red;
+
+            ShowAlert(customPrompt, consoleColor);
+
+        }
+
+        internal void ShowAlert(string customPrompt, ConsoleColor consoleColor)
+        {
+
+            Console.ForegroundColor = consoleColor;
+
+            Console.Write("┌");
+            for (int i = 0; i < customPrompt.Length + 2; i++)
             {
-                Write(lineToWrite);
+                Console.Write("─");
             }
+            Console.WriteLine("┐");
+
+            Console.Write("│ ");
+            Console.Write(customPrompt);
+            Console.WriteLine(" │");
+
+            Console.Write("└");
+            for (int i = 0; i < customPrompt.Length + 2; i++)
+            {
+                Console.Write("─");
+            }
+            Console.WriteLine("┘");
+
             Console.ForegroundColor = ConsoleColor.White;
 
-            WaitForKey("Press any key to continue...");
-        }
-        internal void ShowResult(string customPrompt)
-        {
-            string frame = new String('=', customPrompt.Length + 4);
-
-            Console.ForegroundColor = ConsoleColor.Green;
-            Write(" ");
-            Write(frame);
-            Write($"= { customPrompt} =");
-            Write(frame);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(" ");
 
             WaitForKey("Press any key to continue...");
-        }
-
-        internal List<string> GetFrame(string customPrompt)
-        {
-            List<string> result = new List<string>();
-
-            int topleft = 218;
-            int hline = 196;
-            int topright = 191;
-            int vline = 179;
-            int bottomleft = 192;
-            int bottomright = 217;
-
-            result.Add(topleft + new String((char)hline, customPrompt.Length + 4) + topright);
-            result.Add((char)vline + " " + customPrompt + " " + (char)vline);
-            result.Add(bottomleft + new String((char)hline, customPrompt.Length + 4) + bottomright);
-
-            return result;
         }
 
         internal void ClearScreen()

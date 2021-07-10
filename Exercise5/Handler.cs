@@ -24,7 +24,6 @@ namespace Exercise5
 
             Garage = new Garage(vehicleCapacity);
 
-            // UI.ShowResult($"Garage for {vehicleCapacity} vehicles created!");
             UI.DisplaySuccess($"Garage for {vehicleCapacity} vehicles created!");
 
             return Garage;
@@ -44,7 +43,7 @@ namespace Exercise5
 
                 if (Garage.HasRegNo(RegNo))
                 {
-                    // UI.WriteWarning($"Registration Number {RegNo} is already parked in the Garage");
+                    UI.DisplayWarning($"Registration Number {RegNo} is already parked in the Garage");
                     return false;
                 }
 
@@ -80,7 +79,7 @@ namespace Exercise5
                 Vehicle Vehicle = new Vehicle(RegNo, Color, Wheels);
                 Garage.Add(Vehicle);
 
-                UI.ShowResult($"Added {Vehicle} to the Garage.");
+                UI.DisplaySuccess($"Added {Vehicle} to the Garage.");
 
                 return true;
             }
