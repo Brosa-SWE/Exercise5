@@ -39,21 +39,28 @@ namespace Exercise5
                 switch (input)
                 {
                     case "1":
-                        Handler.CreateGarage();
+                        Garage = Handler.CreateGarage();
                         break;
 
                     case "2":
-                        string vehicleType = VehicleTypeMenu.DisplayAndGetUserInput();
+                        if (GarageCreated) {
+                            string vehicleType = VehicleTypeMenu.DisplayAndGetUserInput();
 
-                        Handler.ParkVehicle(vehicleType);
+                            Handler.ParkVehicle(vehicleType);
+                        }
+                    
                         break;
 
                     case "3":
-                        Handler.PrintGarage();
+                        if (GarageCreated) { Handler.RemoveVehicle(); }
+                        break;
+
+                    case "4":
+                        if (GarageCreated) { Handler.PrintGarage(); }
                         break;
 
                     case "9":
-                        Handler.AddTestVehicles();
+                        if (GarageCreated) {Handler.AddTestVehicles();}
                         break;
 
                     case "0":
@@ -63,6 +70,21 @@ namespace Exercise5
             }
         }
 
+        private bool GarageCreated { 
+            
+            get
+            {
+                if (Garage == null)
+                {
+                    UI.DisplayFailure("Garage has not been created yet!");
+                    return false;
+                }
+
+                return true;
+            }
+        
+        }
+
         private Menu CreateMainMenu()
         {
             Menu MainMenu = new Menu(UI, "Garage Management System V1.0");
@@ -70,7 +92,9 @@ namespace Exercise5
             MainMenu.AddItem("1", "Create Garage");
             MainMenu.AddItem("2", "Park Vehicle");
             MainMenu.AddItem("3", "Remove Vehicle");
-            MainMenu.AddItem("4", "Search/List parked Vehicles");
+            MainMenu.AddItem("4", "List all parked Vehicles");
+            MainMenu.AddItem("5", "Search parked Vehicles");
+
             MainMenu.AddEmptyLine();
             MainMenu.AddItem("9", "Add Test Data Vehicles");
             MainMenu.AddEmptyLine();

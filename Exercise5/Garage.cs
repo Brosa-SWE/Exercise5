@@ -29,6 +29,24 @@ namespace Exercise5
 
         }
 
+        public bool IsEmpty
+        {
+            
+            get
+            {
+
+                Console.WriteLine("Count: " + Count);
+                Console.ReadKey();
+
+                if (Count == 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
         public IEnumerator GetEnumerator()
         {
             foreach (Vehicle vehicle in Vehicles)
@@ -37,7 +55,22 @@ namespace Exercise5
             }
         }
 
-        public int Count { get { return Vehicles.Length; } }
+        public int Count { 
+            
+            get 
+            { 
+                if(Vehicles == null)
+                {
+                    return 0;
+                }
+
+                if (!Vehicles.Any())
+                {
+                    return 0;
+                }
+                return Vehicles.Count(); 
+            } 
+        }
 
         public int FreeSpaces { get { return VehicleCapacity - Count; } }
 

@@ -85,22 +85,34 @@ namespace Exercise5
             }
         }
 
-        public void PrintGarage()
+        internal bool RemoveVehicle()
         {
+            return true;
+        }
+
+        public bool PrintGarage()
+        {
+            UI.ClearScreen();
             UI.Write(" ");
+
+            if (Garage.IsEmpty)
+            {
+                UI.DisplayFailure("No vehicles are parked in the Garage.");
+                return false;
+            }
+
             UI.Write($"Garage Content (Usuage: {Garage.Count}/{Garage.VehicleCapacity})");
             UI.Write("==============================================");
 
             foreach (Vehicle Vehicle in Garage)
             {
-                if (Garage != null)
-                {
-                    UI.Write(Vehicle.ToString());
-                }
+                UI.Write(Vehicle.ToString());
             }
 
             UI.Write(" ");
-            UI.Write("Press any key to contine...");
+            UI.WaitForKey("Press any key to contine...");
+
+            return true;
         }
 
         public bool Add(Vehicle vehicle)
