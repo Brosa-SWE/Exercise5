@@ -43,20 +43,24 @@ namespace Exercise5
                         break;
 
                     case "2":
-                        if (GarageCreated) {
+                        if (GarageCreated && GarageHasRoom) {
                             string vehicleType = VehicleTypeMenu.DisplayAndGetUserInput();
 
                             Handler.ParkVehicle(vehicleType);
                         }
-                    
+                        
                         break;
 
                     case "3":
-                        if (GarageCreated) { Handler.RemoveVehicle(); }
+                        if (GarageCreated && GarageHasAtLeastOneVehicleParked) { Handler.RemoveVehicle(); }
                         break;
 
                     case "4":
-                        if (GarageCreated) { Handler.PrintGarage(); }
+                        if (GarageCreated && GarageHasAtLeastOneVehicleParked) { Handler.PrintGarage(); }
+                        break;
+
+                    case "5":
+                        if (GarageCreated && GarageHasAtLeastOneVehicleParked) { Handler.SearchVehicle(); }
                         break;
 
                     case "9":
@@ -76,13 +80,44 @@ namespace Exercise5
             {
                 if (Garage == null)
                 {
-                    UI.DisplayFailure("Garage has not been created yet!");
+                    UI.DisplayFailure("Garage has not been created yet.");
                     return false;
                 }
 
                 return true;
             }
         
+        }
+
+        public bool GarageHasRoom {
+
+            get 
+            {
+                if (Garage.IsFull)
+                {
+                    UI.DisplayFailure($"Garage is full (Max {Garage.VehicleCapacity} vehicles).");
+                    return false;
+                }
+
+                return true;
+            }
+        }
+
+        private bool GarageHasAtLeastOneVehicleParked
+        {
+            get
+            {
+                if (Garage.HasAtLeastOneVehicleParked)
+                {
+                    return true;
+                }
+                else
+                {
+                    UI.DisplayFailure("Garage does not have any vehicles parked.");
+
+                    return false;
+                }
+            }
         }
 
         private Menu CreateMainMenu()

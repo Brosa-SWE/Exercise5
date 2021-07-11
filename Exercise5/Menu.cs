@@ -22,11 +22,11 @@ namespace Exercise5
 
         public string DisplayAndGetUserInput()
         {
-            Display();
+            DisplayMenu();
             return GetUserMenuSelection();
         }
 
-        public void Display()
+        public void DisplayMenu()
         {
           // List<string> ValidOptions = new List<string> { "1", "2", "3", "0" };
 
@@ -64,8 +64,8 @@ namespace Exercise5
                 }
                 else
                 {
-                    UI.ClearScreen();
-                    UI.WaitForKey($"Please enter a valid input ({String.Join(", ", ValidOptions)})");
+                    UI.DisplayWarning($"Please enter a valid input ({String.Join(", ", ValidOptions)})");
+                    return "";
                 }
 
             }

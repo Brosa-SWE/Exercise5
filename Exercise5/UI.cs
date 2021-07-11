@@ -67,22 +67,21 @@ namespace Exercise5
                     input = "<INVALID>"; // Value to provoke invalid option below
                 }
 
-                int inputInt;
+                int inputInt; 
 
                 if (!int.TryParse(input, out inputInt))
                 {
-                    inputInt = minimumValue - 1;
+                    inputInt = -9999; // Magic number to provoke input fail below for non numeric input
                 }
 
-                if (inputInt < minimumValue || inputInt > maximumValue)
+                if (inputInt == -9999 || inputInt < minimumValue || inputInt > maximumValue)
                 {
                     ClearScreen();
-                    WaitForKey($"Valid input is {minimumValue} - {maximumValue}, press any key to try again.");
+                    DisplayFailure($"Valid input is {minimumValue} - {maximumValue}, press any key to try again.");
                 }
-                else
-                {
-                    return inputInt;
-                }
+
+                return inputInt;
+
             }
         }
 

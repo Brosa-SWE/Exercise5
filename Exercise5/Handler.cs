@@ -31,28 +31,65 @@ namespace Exercise5
 
         public bool ParkVehicle(string vehicleType)
         {
+            int Wheels;
+            string RegNo;
+            string Color;
 
             while (true)
             {
                 // ======================
                 // Registration Number
                 // ======================
-                string RegNo = UI.GetUserInputString("Enter Registration Number or 0 to Exit to Main Menu: ", true);
-
-                if (RegNo == "0") { return false; }
-
-                if (Garage.HasRegNo(RegNo))
+                while (true)
                 {
-                    UI.DisplayWarning($"Registration Number {RegNo} is already parked in the Garage");
-                    return false;
+                    RegNo = UI.GetUserInputString("Enter Registration Number or 0 to Exit to Main Menu: ", true);
+
+                    if (RegNo == "0") { return false; }
+
+                    if (Garage.HasRegNo(RegNo))
+                    {
+                        UI.DisplayWarning($"Registration Number {RegNo} is already parked in the Garage");
+                        return false;
+                    }
+
+                    if (RegNo == "")
+                    {
+                        //ToDo: FIx Robustness of no input
+                        UI.DisplayFailure("You must enter a Registration Number.");
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
 
                 // ======================
-                // Rest of common Vehicle Data
+                // Color
                 // ======================
-                string Color = UI.GetUserInputString("Enter Color: ", false);
+                while (true)
+                {
+                    Color = UI.GetUserInputString("Enter Color: ", true);
 
-                int Wheels = UI.GetUserInputInt("Enter no of Wheels: ", false, 0, 50);
+                    if (Color == "")
+                    {
+                        // Todo: Fix Robustness of no input
+                        UI.DisplayFailure("You must inout a color.");
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                // ======================
+                // Wheels
+                // ======================
+                while (true)
+                {
+                    Wheels = UI.GetUserInputInt("Enter no of Wheels: ", true, 0, 50);
+
+                    if (Wheels != -9999) { break; }
+                }
 
                 // ======================
                 // Vehicle Type Unique Data
@@ -83,6 +120,13 @@ namespace Exercise5
 
                 return true;
             }
+
+            return false;
+        }
+
+        internal void SearchVehicle()
+        {
+            throw new NotImplementedException();
         }
 
         internal bool RemoveVehicle()
@@ -106,7 +150,7 @@ namespace Exercise5
 
             foreach (Vehicle Vehicle in Garage)
             {
-                UI.Write(Vehicle.ToString());
+                UI.Write(Vehicle?.ToString());
             }
 
             UI.Write(" ");

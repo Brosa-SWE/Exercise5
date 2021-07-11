@@ -29,15 +29,29 @@ namespace Exercise5
 
         }
 
+        public bool HasAtLeastOneVehicleParked
+        {
+            get
+            {
+                if (Count > 0)
+                {
+                    return true;
+                }
+
+                return false;
+            }
+        }
+
+        public bool HasRoom
+        { get { return !IsFull; } }
+        
+        public bool IsFull { get { return VehicleCapacity == Count; } }
+
         public bool IsEmpty
         {
             
             get
             {
-
-                Console.WriteLine("Count: " + Count);
-                Console.ReadKey();
-
                 if (Count == 0)
                 {
                     return true;
@@ -64,11 +78,7 @@ namespace Exercise5
                     return 0;
                 }
 
-                if (!Vehicles.Any())
-                {
-                    return 0;
-                }
-                return Vehicles.Count(); 
+                return Vehicles.Count(s => s != null);
             } 
         }
 
@@ -79,11 +89,6 @@ namespace Exercise5
             var Match = Vehicles.FirstOrDefault(vehicle => vehicle?.RegNo == RegNo);
 
             return Match != null;
-        }
-
-        public bool IsFull()
-        {
-            return VehicleCapacity == Count;
         }
 
         public bool Add(Vehicle vehicle)
