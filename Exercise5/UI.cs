@@ -78,11 +78,15 @@ namespace Exercise5
                 {
                     ClearScreen();
                     DisplayFailure($"Valid input is {minimumValue} - {maximumValue}, press any key to try again.");
+                    break;
                 }
 
                 return inputInt;
 
             }
+
+            return -9999;
+
         }
 
         public void Write(string messageToWrite)

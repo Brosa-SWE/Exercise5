@@ -12,12 +12,13 @@ namespace Exercise5.Vehicles
 
         public Bus(string regNo, string color, int noOfWheels, int noOfSeats) : base(regNo, color, noOfWheels)
         {
-            NoOfSeats = noOfSeats;
+            VehicleSpecificLabel = "Seats";
+            VehicleSpecificValue =  noOfWheels.ToString();
         }
 
         public override string ToString()
         {
-            return base.ToString() + " and " + NoOfSeats + " seats";
+            return base.ToString() + " and " + VehicleSpecificValue + " seats";
         }
     }
 }

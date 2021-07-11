@@ -12,13 +12,14 @@ namespace Exercise5.Vehicles
 
         public Car(string regNo, string color, int noOfWheels, string fuelType) : base(regNo, color, noOfWheels)
         {
-            FuelType = fuelType;
+            VehicleSpecificLabel = "Fueltype";
+            VehicleSpecificValue = fuelType;
         }
 
         public override string ToString()
         {
-            return base.ToString() + " running on " + FuelType + " power";
-
+            return base.ToString() + " running on " + VehicleSpecificValue + " power";
         }
+
     }
 }

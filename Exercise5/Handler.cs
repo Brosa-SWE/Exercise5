@@ -20,13 +20,21 @@ namespace Exercise5
 
         public Garage CreateGarage()
         {
-            int vehicleCapacity = UI.GetUserInputInt("Vehicle Capacity for the new Garage: ", true, 1, 10);
+            int MaxGarageSize = 20;
 
-            Garage = new Garage(vehicleCapacity);
+            while (true)
+            {
+                int vehicleCapacity = UI.GetUserInputInt($"Vehicle Capacity for the new Garage (1-{MaxGarageSize}):", true, 1, MaxGarageSize);
 
-            UI.DisplaySuccess($"Garage for {vehicleCapacity} vehicles created!");
+                if (vehicleCapacity != -9999)
+                {
+                    Garage = new Garage(vehicleCapacity);
 
-            return Garage;
+                    UI.DisplaySuccess($"Garage for {vehicleCapacity} vehicles created!");
+
+                    return Garage;
+                }
+            }
         }
 
         public bool ParkVehicle(string vehicleType)
@@ -92,28 +100,22 @@ namespace Exercise5
                 }
 
                 // ======================
+                // Create Vehicle Object
+                // ======================
+                Vehicle Vehicle = new Vehicle(RegNo, Color, Wheels);
+
+                // ======================
                 // Vehicle Type Unique Data
                 // ======================
-
-                switch (vehicleType)
+                while (true)
                 {
-                    case "1":
-
-                        break;
-
-                    case "2":
-
-                        break;
-
-                    case "3":
-
-                        break;
+                    string VehicleSpecificValue = UI.GetUserInputString($"Enter {Vehicle.VehicleSpecificLabel}: ", true);
+                    Vehicle.VehicleSpecificValue = VehicleSpecificValue;
                 }
 
                 // ======================
                 // Park Vehicle in Garage
                 // ======================
-                Vehicle Vehicle = new Vehicle(RegNo, Color, Wheels);
                 Garage.Add(Vehicle);
 
                 UI.DisplaySuccess($"Added {Vehicle} to the Garage.");

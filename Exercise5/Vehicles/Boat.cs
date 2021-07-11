@@ -12,12 +12,12 @@ namespace Exercise5.Vehicles
 
         public Boat(string regNo, string color, int noOfWheels, int length) : base(regNo, color, noOfWheels)
         {
-            Length = length;
+            VehicleSpecificLabel = "Length";
+            VehicleSpecificValue = length.ToString();
         }
-
         public override string ToString()
         {
-            return base.ToString() + " that is " + Length + " meters long";
+            return base.ToString() + " that is " + VehicleSpecificValue + " meters long";
         }
     }
 }

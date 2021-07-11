@@ -12,12 +12,13 @@ namespace Exercise5.Vehicles
 
         public Motorcycle(string regNo, string color, int noOfWheels, int cylinderVolume) : base(regNo, color, noOfWheels)
         {
-            CylinderVolume = cylinderVolume;
+            VehicleSpecificLabel = "Cylinder Volumne";
+            VehicleSpecificValue = cylinderVolume.ToString();
         }
 
         public override string ToString()
         {
-            return base.ToString() + " and " + CylinderVolume  + " CC engine";
+            return base.ToString() + " and " + VehicleSpecificValue + " cc";
         }
     }
 }

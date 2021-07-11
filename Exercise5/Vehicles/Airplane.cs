@@ -13,12 +13,13 @@ namespace Exercise5.Vehicles
 
         public Airplane(string regNo, string color, int noOfWheels, int noOfEngines) : base(regNo, color, noOfWheels)
         {
-            NoOfEngines = noOfEngines;
+            VehicleSpecificLabel = "Number of engines";
+            VehicleSpecificValue = noOfEngines.ToString();
         }
 
         public override string ToString()
         {
-            return base.ToString() + " and " + NoOfEngines + " engines";
+            return base.ToString() + " and " + VehicleSpecificValue + " engines";
         }
     }
 }
