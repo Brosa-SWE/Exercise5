@@ -67,7 +67,7 @@ namespace Exercise5
                     input = "<INVALID>"; // Value to provoke invalid option below
                 }
 
-                int inputInt; 
+                int inputInt;
 
                 if (!int.TryParse(input, out inputInt))
                 {

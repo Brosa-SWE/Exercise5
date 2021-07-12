@@ -52,7 +52,12 @@ namespace Exercise5
                         break;
 
                     case "3":
-                        if (GarageCreated && GarageHasAtLeastOneVehicleParked) { Handler.RemoveVehicle(); }
+                        if (GarageCreated && GarageHasAtLeastOneVehicleParked) 
+                        {
+                           // Menu CurrentVehiclesMenu = CreateCurrentVehiclesMenu();
+
+                            Handler.RemoveVehicle(); 
+                        }
                         break;
 
                     case "4":
@@ -156,6 +161,15 @@ namespace Exercise5
             Menu.AddItem("3", "Bus");
             Menu.AddItem("4", "Boat");
             Menu.AddItem("5", "Airplane");
+
+            return Menu;
+        }
+
+        private Menu CreateCurrentVehiclesMenU()
+        {
+            Menu Menu = new Menu(UI, "Select Vehicle to Remove from the Garage");
+
+           // foreach (Vehicle Vehicle in Handler.Vec)
 
             return Menu;
         }

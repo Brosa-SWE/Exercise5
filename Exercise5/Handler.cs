@@ -59,7 +59,7 @@ namespace Exercise5
 
                     if (RegNo == "0") { return false; }
 
-                    if (Garage.HasRegNo(RegNo))
+                    if (Garage.ContainsRegNo(RegNo))
                     {
                         UI.DisplayWarning($"Registration Number {RegNo} is already parked in the Garage");
                         return false;
@@ -286,7 +286,7 @@ namespace Exercise5
             Add(boat);
 
             string regNo = "JYF67";
-            if (Garage.HasRegNo(regNo))
+            if (Garage.ContainsRegNo(regNo))
             {
                 UI.Write("Garage has RegNo " + regNo);
             }
@@ -297,7 +297,7 @@ namespace Exercise5
 
             regNo = "NisseGurra Aktersnurra";
 
-            if (Garage.HasRegNo(regNo))
+            if (Garage.ContainsRegNo(regNo))
             {
                 UI.Write("Garage has RegNo " + regNo);
             }

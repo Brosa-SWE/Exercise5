@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Exercise5
+﻿namespace Exercise5
 {
     interface IUI
     {
-
-        public void Write(string messageToWrite);
+        int GetUserInputInt(int minimumValue, int maximumValue);
+        int GetUserInputInt(string customPrompt, bool clearScreenBetweenTries, int minimumValue, int maximumValue);
+        string GetUserInputString();
+        string GetUserInputString(string customPrompt, bool clearScreenBetweenTries);
+        void Write(string messageToWrite);
     }
 }

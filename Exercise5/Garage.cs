@@ -13,9 +13,9 @@ namespace Exercise5
     //Todo: Change to IEnumerable<T>
     internal class Garage : IEnumerable // : IGarage<IEnumerable>
     {
-        public event UIwriteDelegate UIwrite;
-        public event UIwriteErrorDelegate UIwriteError;
-        public event UIwriteWarningDelegate UIwriteWarning;
+       // public event UIwriteDelegate UIwrite;
+       public event UIwriteErrorDelegate UIwriteError;
+       // public event UIwriteWarningDelegate UIwriteWarning;
 
         private int _vehicleCapacity;
         public int VehicleCapacity { get { return _vehicleCapacity; } }
@@ -85,11 +85,16 @@ namespace Exercise5
 
         public int FreeSpaces { get { return VehicleCapacity - Count; } }
 
-        public bool HasRegNo(string RegNo)
+        public Vehicle GetVehicleByRegNo(string RegNo)
         {
-            var Match = Vehicles.FirstOrDefault(vehicle => vehicle?.RegNo == RegNo);
+            Vehicle MatchingVehicle = Vehicles.FirstOrDefault(vehicle => vehicle?.RegNo == RegNo);
 
-            return Match != null;
+            return MatchingVehicle;
+        }
+
+        public bool ContainsRegNo(string RegNo)
+        {
+             return GetVehicleByRegNo(RegNo) != null;
         }
 
         public bool Add(Vehicle vehicle)
@@ -159,6 +164,22 @@ namespace Exercise5
             }
 
             return VehiclesByType;
+        }
+
+        public List<string> VehiclesByRegNo()
+        {
+            List<String> VehiclesByRegNo = new List<string>();
+
+            foreach (Vehicle Vehicle in Vehicles)
+            {
+                if (Vehicle != null)
+                {
+                    VehiclesByRegNo.Add($"{Vehicle.RegNo} - {Vehicle.Color} {Vehicle.VehicleType}");
+                }
+            }
+
+            return VehiclesByRegNo;
+
         }
 
     }
