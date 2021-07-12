@@ -8,16 +8,15 @@ namespace Exercise5.Vehicles
 {
     class Boat : Vehicle
     {
-        public int Length { get; set; }
-
         public Boat(string regNo, string color, int noOfWheels, int length) : base(regNo, color, noOfWheels)
         {
-            VehicleSpecificLabel = "Length";
-            VehicleSpecificValue = length.ToString();
+            SpecialPropertyValue = length.ToString();
         }
+        public Boat(string regNo, string color, int noOfWheels) : base(regNo, color, noOfWheels) { }
+
         public override string ToString()
         {
-            return base.ToString() + " that is " + VehicleSpecificValue + " meters long";
+            return base.ToString() + " that is " + SpecialPropertyLabel + " meters long";
         }
     }
 }

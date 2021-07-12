@@ -8,17 +8,17 @@ namespace Exercise5.Vehicles
 {
     class Motorcycle : Vehicle
     {
-        public int CylinderVolume { get; set; }
-
         public Motorcycle(string regNo, string color, int noOfWheels, int cylinderVolume) : base(regNo, color, noOfWheels)
         {
-            VehicleSpecificLabel = "Cylinder Volumne";
-            VehicleSpecificValue = cylinderVolume.ToString();
+            SpecialPropertyValue = cylinderVolume.ToString();
         }
+
+        public Motorcycle(string regNo, string color, int noOfWheels) : base(regNo, color, noOfWheels) { }
+
 
         public override string ToString()
         {
-            return base.ToString() + " and " + VehicleSpecificValue + " cc";
+            return base.ToString() + " and " + SpecialPropertyValue + " cc";
         }
     }
 }

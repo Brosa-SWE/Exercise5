@@ -9,17 +9,19 @@ namespace Exercise5.Vehicles
     class Airplane : Vehicle
     {
 
-        public int NoOfEngines { get; set; }
-
         public Airplane(string regNo, string color, int noOfWheels, int noOfEngines) : base(regNo, color, noOfWheels)
         {
-            VehicleSpecificLabel = "Number of engines";
-            VehicleSpecificValue = noOfEngines.ToString();
+            SpecialPropertyValue = noOfEngines.ToString();
+        }
+
+        public Airplane(string regNo, string color, int noOfWheels) : base(regNo, color, noOfWheels)
+        {
+           
         }
 
         public override string ToString()
         {
-            return base.ToString() + " and " + VehicleSpecificValue + " engines";
+            return base.ToString() + " and " + SpecialPropertyLabel + " engines";
         }
     }
 }

@@ -14,16 +14,48 @@ namespace Exercise5
         private List<string> ValidOptions = new List<string>();
         private List<MenuItem> MenuItems = new List<MenuItem>();
 
+        private Dictionary<string, string> Dictionary = new Dictionary<string, string>();
+        private bool UseDictionary;
+
         public Menu(UI ui, string menuHeadline)
         {
             UI = ui;
             MenuHeadline = menuHeadline;
         }
 
+        public bool UseCurrentMenuAsDictionaryForInput
+        {
+            get => UseDictionary;
+ 
+            set => UseDictionary = value;
+            
+        }
+
+        // Translates user selected Menu Option to a custom return value
+        public void UseCustomDictionaryForUserInput(Dictionary<string, string> dictionary)
+        {
+            Dictionary = dictionary;
+            UseDictionary = true;
+        }
+
+        // Translates user selected Menu Option to menu label value
         public string DisplayAndGetUserInput()
         {
             DisplayMenu();
-            return GetUserMenuSelection();
+
+            string userSelection = GetUserMenuSelection();
+
+            if (UseDictionary)
+            {
+                if (userSelection == "")
+                {
+                    return "";
+                }
+
+                return (Dictionary[userSelection]);
+            }
+
+            return userSelection;
         }
 
         public void DisplayMenu()
@@ -82,6 +114,8 @@ namespace Exercise5
             MenuItems.Add(MenuItem);
 
             ValidOptions.Add(optionKey);
+
+            Dictionary.Add(optionKey, optionLabel);
         }
 
         public void AddEmptyLine()

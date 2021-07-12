@@ -141,8 +141,10 @@ namespace Exercise5
         private Menu CreateVehicleTypeMenu()
         {
             Menu Menu = new Menu(UI, "Select Vehicle Type");
+            Menu.UseCurrentMenuAsDictionaryForInput = true;
+
             Menu.AddItem("1", "Car");
-            Menu.AddItem("2", "Motorcyle");
+            Menu.AddItem("2", "Motorcycle");
             Menu.AddItem("3", "Bus");
             Menu.AddItem("4", "Boat");
             Menu.AddItem("5", "Airplane");

@@ -12,6 +12,7 @@ namespace Exercise5
     {
         private Garage Garage;
         private static UI UI;
+        // enum SpecialProperties { "FuelType", " }
 
         public Handler(UI ui)
         {
@@ -39,9 +40,12 @@ namespace Exercise5
 
         public bool ParkVehicle(string vehicleType)
         {
-            int Wheels;
+            Vehicle Vehicle = null;
+
             string RegNo;
             string Color;
+            int Wheels;
+            string SpecialPropertyValue;
 
             while (true)
             {
@@ -50,7 +54,7 @@ namespace Exercise5
                 // ======================
                 while (true)
                 {
-                    RegNo = UI.GetUserInputString("Enter Registration Number or 0 to Exit to Main Menu: ", true);
+                    RegNo = UI.GetUserInputString($"Enter Registration Number for {vehicleType} or 0 to Exit to Main Menu: ", true);
 
                     if (RegNo == "0") { return false; }
 
@@ -62,7 +66,6 @@ namespace Exercise5
 
                     if (RegNo == "")
                     {
-                        //ToDo: FIx Robustness of no input
                         UI.DisplayFailure("You must enter a Registration Number.");
                     }
                     else
@@ -80,7 +83,6 @@ namespace Exercise5
 
                     if (Color == "")
                     {
-                        // Todo: Fix Robustness of no input
                         UI.DisplayFailure("You must inout a color.");
                     }
                     else
@@ -102,15 +104,51 @@ namespace Exercise5
                 // ======================
                 // Create Vehicle Object
                 // ======================
-                Vehicle Vehicle = new Vehicle(RegNo, Color, Wheels);
+                 switch (vehicleType)
+                {
+                    case "Airplane":
+                        {
+                            Vehicle = new Airplane(RegNo, Color, Wheels);
+                            break;
+                        }
+                    case "Boat":
+                        {
+                            Vehicle = new Boat(RegNo, Color, Wheels);
+                            break;
+                        }
+                    case "Bus":
+                        {
+                            Vehicle = new Bus(RegNo, Color, Wheels);
+                            break;
+                        }
+                    case "Car":
+                        {
+                            Vehicle = new Car(RegNo, Color, Wheels);
+                            break;
+                        }
+                    case "Motorcycle":
+                        {
+                            Vehicle = new Motorcycle(RegNo, Color, Wheels);
+                            break;
+                        }
+                }
 
                 // ======================
                 // Vehicle Type Unique Data
                 // ======================
                 while (true)
                 {
-                    string VehicleSpecificValue = UI.GetUserInputString($"Enter {Vehicle.VehicleSpecificLabel}: ", true);
-                    Vehicle.VehicleSpecificValue = VehicleSpecificValue;
+                    SpecialPropertyValue = UI.GetUserInputString($"Enter {Vehicle.SpecialPropertyLabel}: ", true);
+
+                    if (SpecialPropertyValue == "")
+                    {
+                        UI.DisplayFailure($"You must enter {Vehicle.SpecialPropertyLabel}.");
+                    }
+                    else
+                    {
+                        Vehicle.SpecialPropertyValue = SpecialPropertyValue;
+                        break;
+                    }
                 }
 
                 // ======================
@@ -123,7 +161,7 @@ namespace Exercise5
                 return true;
             }
 
-            return false;
+            //return false;
         }
 
         internal void SearchVehicle()
