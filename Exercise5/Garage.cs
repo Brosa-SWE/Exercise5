@@ -44,12 +44,12 @@ namespace Exercise5
 
         public bool HasRoom
         { get { return !IsFull; } }
-        
+
         public bool IsFull { get { return VehicleCapacity == Count; } }
 
         public bool IsEmpty
         {
-            
+
             get
             {
                 if (Count == 0)
@@ -69,17 +69,18 @@ namespace Exercise5
             }
         }
 
-        public int Count { 
-            
-            get 
-            { 
-                if(Vehicles == null)
+        public int Count
+        {
+
+            get
+            {
+                if (Vehicles == null)
                 {
                     return 0;
                 }
 
                 return Vehicles.Count(s => s != null);
-            } 
+            }
         }
 
         public int FreeSpaces { get { return VehicleCapacity - Count; } }
@@ -112,9 +113,9 @@ namespace Exercise5
                 if (Vehicles[i] == null)
                 {
                     Vehicles[i] = vehicle;
-                                   
+
                     break;
-                 
+
                 }
             }
 
@@ -124,7 +125,7 @@ namespace Exercise5
 
         public bool Remove(Vehicle vehicle)
         {
-         
+
             for (int i = 0; i < Vehicles.Length; i++)
             {
                 if (Vehicles[i] == vehicle)
@@ -135,6 +136,29 @@ namespace Exercise5
             }
 
             return false;
+        }
+
+        public Dictionary<string, int> VehiclesByType()
+        {
+            Dictionary<string, int> VehiclesByType = new Dictionary<string, int>();
+
+            foreach (Vehicle Vehicle in Vehicles)
+            {
+                if (Vehicle != null)
+                {
+                    if (VehiclesByType.ContainsKey(Vehicle?.VehicleType))
+                    {
+                        VehiclesByType[Vehicle.VehicleType] += 1;
+                    }
+                    else
+                    {
+                        VehiclesByType[Vehicle.VehicleType] = 1;
+                    }
+
+                }
+            }
+
+            return VehiclesByType;
         }
 
     }

@@ -60,6 +60,10 @@ namespace Exercise5
                         break;
 
                     case "5":
+                        if (GarageCreated && GarageHasAtLeastOneVehicleParked) { Handler.ListVehiclesByType(); }
+                        break;
+
+                    case "6":
                         if (GarageCreated && GarageHasAtLeastOneVehicleParked) { Handler.SearchVehicle(); }
                         break;
 
@@ -132,8 +136,8 @@ namespace Exercise5
             MainMenu.AddItem("2", "Park Vehicle");
             MainMenu.AddItem("3", "Remove Vehicle");
             MainMenu.AddItem("4", "List all parked Vehicles");
-            MainMenu.AddItem("5", "Search parked Vehicles");
-
+            MainMenu.AddItem("5", "List Vehicles by type");
+            MainMenu.AddItem("6", "Search parked Vehicles");
             MainMenu.AddEmptyLine();
             MainMenu.AddItem("9", "Add Test Data Vehicles");
             MainMenu.AddEmptyLine();
