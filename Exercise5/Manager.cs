@@ -54,10 +54,20 @@ namespace Exercise5
                     case "3":
                         if (GarageCreated && GarageHasAtLeastOneVehicleParked) 
                         {
-                           // Menu CurrentVehiclesMenu = CreateCurrentVehiclesMenu();
+                            Menu CurrentVehiclesMenu = CreateCurrentVehiclesMenu();
+                            CurrentVehiclesMenu.UseCurrentMenuAsDictionaryForInput = true;
 
-                            Handler.RemoveVehicle(); 
+                            string RegNo = "";
+
+                            string selection = CurrentVehiclesMenu.DisplayAndGetUserInput();
+                            if (selection != "")
+                            {
+                                RegNo = selection.LeftBack(" - ");
+                                Handler.RemoveVehicle(RegNo);
+                            }
+
                         }
+
                         break;
 
                     case "4":
@@ -165,11 +175,22 @@ namespace Exercise5
             return Menu;
         }
 
-        private Menu CreateCurrentVehiclesMenU()
+        private Menu CreateCurrentVehiclesMenu()
         {
-            Menu Menu = new Menu(UI, "Select Vehicle to Remove from the Garage");
+            List<string> CurrentVehicles = new List<string>(Garage.VehiclesByRegNo());
+            return GenerateMenuFromList(CurrentVehicles, "Select Vehicle to Remove from the Garage");
+        }
 
-           // foreach (Vehicle Vehicle in Handler.Vec)
+        private Menu GenerateMenuFromList(List<string> ListOfMenuItems, string menuHeadline)
+        {
+            Menu Menu = new Menu(UI, menuHeadline);
+            int i = 1;
+
+            foreach (string MenuItem in ListOfMenuItems)
+            {
+                Menu.AddItem(i.ToString(), MenuItem);
+                i++;
+            }
 
             return Menu;
         }

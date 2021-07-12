@@ -170,9 +170,30 @@ namespace Exercise5
             throw new NotImplementedException();
         }
 
-        internal bool RemoveVehicle()
+        internal bool RemoveVehicle(string RegNo)
         {
-            return true;
+            string VehicleInfo = "";
+
+            Vehicle Vehicle = Garage.GetVehicleByRegNo(RegNo);
+
+            if (Vehicle != null)
+            {
+                VehicleInfo = ($"Vehicle {Vehicle} Removed from Garage");
+
+                Garage.Remove(Vehicle);
+
+                UI.DisplaySuccess(VehicleInfo);
+
+                return true;
+            }
+            else
+            {
+                UI.DisplayFailure("Could not find Vehicle with RegNo " + RegNo + " to Remove");
+
+                return false;
+            }
+
+           
         }
 
         public bool PrintGarage()
@@ -246,7 +267,39 @@ namespace Exercise5
             }
         }
 
-        public void AddTestVehicles()
+        public void AddTestData()
+        {
+            string VehicleType = Randomizer.RandomVehicleType();
+            string RegNo = Randomizer.RandomRegNo();
+            string Color = Randomizer.RandomColor();
+            string FuelType = Randomizer.RandomFuelType();
+            int Wheels = int.Parse(Randomizer.RandomString("3468", 1));
+
+            switch (VehicleType){
+
+                case "Airplane":
+                    Airplane Airplane = new Airplane(RegNo, Color, Wheels, )
+                    break;
+
+                case "Boat":
+
+                    break;
+
+                case "Bus":
+
+                    break;
+
+                case "Car":
+
+                    break;
+
+                case "Motorcycle":
+
+                    break;
+            }
+        }
+
+        public void AddTestVehiclesOLD()
         {
             int parkedVehicleQtyBefore = Garage.Count;
 
