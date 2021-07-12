@@ -229,6 +229,8 @@ namespace Exercise5
 
         public void AddTestVehicles()
         {
+            int parkedVehicleQtyBefore = Garage.Count;
+
             Car car = new Car("ABC 123", "Red", 4, "Electric");
             Add(car);
 
@@ -285,6 +287,16 @@ namespace Exercise5
                 UI.Write("Garage does NOT have RegNo " + regNo);
             }
 
+            int created = Garage.Count - parkedVehicleQtyBefore;
+
+            if (created == 0)
+            {
+                UI.DisplayWarning("No vehicles added to the Garage.");
+            }
+            else
+            {
+                UI.DisplaySuccess($"Created {created} vehicles in the Garage.");
+            }
         }
 
     }

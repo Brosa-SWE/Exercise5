@@ -64,7 +64,11 @@ namespace Exercise5
                         break;
 
                     case "9":
-                        if (GarageCreated) {Handler.AddTestVehicles();}
+                        if (GarageCreated) 
+                        {
+                            UI.ClearScreen();
+                            Handler.AddTestVehicles();
+                        }
                         break;
 
                     case "0":
