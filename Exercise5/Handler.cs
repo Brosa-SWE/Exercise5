@@ -188,7 +188,10 @@ namespace Exercise5
                 Input = UI.ReadKey(false);
                 if (Input.Key == ConsoleKey.Backspace)
                 {
-                    sb.Remove(sb.Length - 1, 1);
+                    if (sb.Length > 0)
+                    {
+                        sb.Remove(sb.Length - 1, 1);
+                    }
                 }
                 else
                 {
