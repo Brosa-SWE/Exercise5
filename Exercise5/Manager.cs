@@ -86,7 +86,7 @@ namespace Exercise5
                         if (GarageCreated) 
                         {
                             UI.ClearScreen();
-                            Handler.AddTestVehicles();
+                            Handler.AddTestData();
                         }
                         break;
 

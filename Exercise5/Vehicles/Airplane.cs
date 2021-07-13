@@ -21,7 +21,7 @@ namespace Exercise5.Vehicles
 
         public override string ToString()
         {
-            return base.ToString() + " and " + SpecialPropertyLabel + " engines";
+            return base.ToString() + " and " + SpecialPropertyValue + " engines";
         }
     }
 }

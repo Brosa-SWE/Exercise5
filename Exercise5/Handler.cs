@@ -22,7 +22,7 @@ namespace Exercise5
 
         public Garage CreateGarage()
         {
-            int MaxGarageSize = 20;
+            int MaxGarageSize = 250;
 
             while (true)
             {
@@ -105,7 +105,7 @@ namespace Exercise5
                 // ======================
                 // Create Vehicle Object
                 // ======================
-                 switch (vehicleType)
+                switch (vehicleType)
                 {
                     case "Airplane":
                         {
@@ -167,7 +167,7 @@ namespace Exercise5
 
         internal void SearchVehicle()
         {
-            throw new NotImplementedException();
+            UI.DisplayFailure("The search function is not implemented yet.");
         }
 
         internal bool RemoveVehicle(string RegNo)
@@ -193,7 +193,7 @@ namespace Exercise5
                 return false;
             }
 
-           
+
         }
 
         public bool PrintGarage()
@@ -269,105 +269,76 @@ namespace Exercise5
 
         public void AddTestData()
         {
-            string VehicleType = Randomizer.RandomVehicleType();
-            string RegNo = Randomizer.RandomRegNo();
-            string Color = Randomizer.RandomColor();
-            string FuelType = Randomizer.RandomFuelType();
-            int Wheels = int.Parse(Randomizer.RandomString("3468", 1));
+            string VehicleType;
+            string RegNo;
+            string Color;
+            string SpecialValue;
+            int Wheels;
+            Vehicle Vehicle = null;
 
-            switch (VehicleType){
-
-                case "Airplane":
-                    Airplane Airplane = new Airplane(RegNo, Color, Wheels, )
-                    break;
-
-                case "Boat":
-
-                    break;
-
-                case "Bus":
-
-                    break;
-
-                case "Car":
-
-                    break;
-
-                case "Motorcycle":
-
-                    break;
-            }
-        }
-
-        public void AddTestVehiclesOLD()
-        {
-            int parkedVehicleQtyBefore = Garage.Count;
-
-            Car car = new Car("ABC 123", "Red", 4, "Electric");
-            Add(car);
-
-            Airplane airplane = new Airplane("N628TS", "White", 6, 2);
-            Add(airplane);
-
-            Motorcycle mc = new Motorcycle("Hej 999", "Green", 2, 1000);
-            Add(mc);
-
-            Bus bus = new Bus("LED 947", "Red", 6, 65);
-            Add(bus);
-
-            Boat boat = new Boat("Gh67", "White", 0, 27);
-            Add(boat);
-
-            // Second set
-
-            car = new Car("ABC 123", "Yellow", 4, "Diesel");
-            Add(car);
-
-            airplane = new Airplane("J654SE", "Grey", 3, 1);
-            Add(airplane);
-
-            // Remove something
-            Remove(boat);
-
-            mc = new Motorcycle("Hayabusa", "Black", 2, 1340);
-            Add(mc);
-
-            new Bus("DFG 046", "Blue", 6, 120);
-            Add(bus);
-
-            boat = new Boat("JYF67", "White", 0, 5);
-            Add(boat);
-
-            string regNo = "JYF67";
-            if (Garage.ContainsRegNo(regNo))
+            while (true)
             {
-                UI.Write("Garage has RegNo " + regNo);
-            }
-            else
-            {
-                UI.Write("Garage does NOT have RegNo " + regNo);
-            }
+                UI.ClearScreen();
+                UI.Write($"Enter number of Test Vehicles to create (1-{Garage.FreeSpaces}), or 0 to exit to Main Menu.");
 
-            regNo = "NisseGurra Aktersnurra";
+                int parkedVehicleQtyBefore = Garage.Count;
 
-            if (Garage.ContainsRegNo(regNo))
-            {
-                UI.Write("Garage has RegNo " + regNo);
-            }
-            else
-            {
-                UI.Write("Garage does NOT have RegNo " + regNo);
-            }
+                int NoOfVehiclesToCreate = UI.GetUserInputInt(0, Garage.FreeSpaces);
 
-            int created = Garage.Count - parkedVehicleQtyBefore;
+                if (NoOfVehiclesToCreate == 0) { return; }
 
-            if (created == 0)
-            {
-                UI.DisplayWarning("No vehicles added to the Garage.");
-            }
-            else
-            {
-                UI.DisplaySuccess($"Created {created} vehicles in the Garage.");
+                for (int j = 0; j < NoOfVehiclesToCreate; j++)
+                {
+                    VehicleType = Randomizer.RandomVehicleType();
+                    RegNo = Randomizer.RandomRegNo();
+                    Color = Randomizer.RandomColor();
+                    SpecialValue = Randomizer.RandomSpecialValue(VehicleType);
+
+                    switch (VehicleType)
+                    {
+
+                        case "Airplane":
+                            Wheels = 6;
+                            Vehicle = new Airplane(RegNo, Color, Wheels, int.Parse(SpecialValue));
+                            break;
+
+                        case "Boat":
+                            Wheels = 0;
+                            Vehicle = new Boat(RegNo, Color, Wheels, int.Parse(SpecialValue));
+                            break;
+
+                        case "Bus":
+                            Wheels = 8;
+                            Vehicle = new Bus(RegNo, Color, Wheels, int.Parse(SpecialValue));
+                            break;
+
+                        case "Car":
+                            Wheels = 4;
+                            Vehicle = new Car(RegNo, Color, Wheels, SpecialValue);
+                            break;
+
+                        case "Motorcycle":
+                            Wheels = 2;
+                            Vehicle = new Motorcycle(RegNo, Color, Wheels, int.Parse(SpecialValue));
+                            break;
+                    }
+
+                    Garage.Add(Vehicle);
+
+                }
+
+                int created = Garage.Count - parkedVehicleQtyBefore;
+
+                if (created == 0)
+                {
+                    UI.DisplayWarning("No vehicles added to the Garage.");
+                }
+                else
+                {
+                    UI.DisplaySuccess($"Created {created} vehicles in the Garage.");
+                }
+
+                return;
             }
         }
 
