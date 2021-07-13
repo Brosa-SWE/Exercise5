@@ -175,7 +175,7 @@ namespace Exercise5
             
             do
             {
-                string CustomPrompt = "Search for RegNo: ";
+                string CustomPrompt = "Search for RegNo (End Search with Enter): " + sb.ToString();
 
                 UI.ClearScreen();
                 UI.Write(CustomPrompt);
@@ -186,8 +186,14 @@ namespace Exercise5
                 UI.SetCursorPosition(CustomPrompt.Length, 0);
 
                 Input = UI.ReadKey(false);
-
-                sb.Append(Input.KeyChar);
+                if (Input.Key == ConsoleKey.Backspace)
+                {
+                    sb.Remove(sb.Length - 1, 1);
+                }
+                else
+                {
+                    sb.Append(Input.KeyChar);
+                }
 
                 string RegNoInput = sb.ToString();
 
