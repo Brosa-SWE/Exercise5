@@ -92,6 +92,23 @@ namespace Exercise5
             return MatchingVehicle;
         }
 
+        public List<string> GetVehiclesMatchingRegNo(string RegNo)
+        {
+
+            var MatchingVehicles = from Vehicle in Vehicles 
+                           where Vehicle.RegNo.IndexOf(RegNo, StringComparison.InvariantCultureIgnoreCase) >= 0
+                           select Vehicle;
+
+            List<string> ReturnValues = new List<string>();
+
+            foreach (Vehicle Vehicle in MatchingVehicles)
+            {
+                ReturnValues.Add(Vehicle.RegNo + " - " + Vehicle.Color + " " + Vehicle.VehicleType);
+            }
+
+            return ReturnValues;
+        }
+
         public bool ContainsRegNo(string RegNo)
         {
              return GetVehicleByRegNo(RegNo) != null;

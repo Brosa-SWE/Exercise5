@@ -175,6 +175,11 @@ namespace Exercise5
             Console.ReadKey();
         }
 
+        internal ConsoleKeyInfo ReadKey(bool intercept)
+        {
+            return Console.ReadKey(intercept);
+        }
+
         internal void WaitForKey(string customPrompt)
         {
             Write(" ");
@@ -185,6 +190,19 @@ namespace Exercise5
         internal void ExitApplication()
         {
             Environment.Exit(0);
+        }
+
+        internal void WriteList(List<string> ListToWrite)
+        {
+           foreach(string line in ListToWrite)
+            {
+                Write(line);
+            }
+        }
+
+        internal void SetCursorPosition(int left, int top)
+        {
+            Console.SetCursorPosition(left, top);
         }
     }
 }

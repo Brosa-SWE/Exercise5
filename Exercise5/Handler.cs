@@ -167,7 +167,37 @@ namespace Exercise5
 
         internal void SearchVehicle()
         {
-            UI.DisplayFailure("The search function is not implemented yet.");
+            // UI.WriteError("Search Not Implemented Yet");
+
+            ConsoleKeyInfo Input;
+            StringBuilder sb = new StringBuilder();
+            List<string> MatchingRegNos = new List<string>();
+            
+            do
+            {
+                string CustomPrompt = "Search for RegNo: ";
+
+                UI.ClearScreen();
+                UI.Write(CustomPrompt);
+                UI.Write(" ");
+                UI.WriteList(MatchingRegNos);
+                UI.Write(" ");
+
+                UI.SetCursorPosition(CustomPrompt.Length, 0);
+
+                Input = UI.ReadKey(false);
+
+                sb.Append(Input.KeyChar);
+
+                string RegNoInput = sb.ToString();
+
+                MatchingRegNos = Garage.GetVehiclesMatchingRegNo(RegNoInput);
+
+                UI.WriteList(MatchingRegNos);
+ 
+            } 
+            while (Input.Key != ConsoleKey.Enter);
+
         }
 
         internal bool RemoveVehicle(string RegNo)
