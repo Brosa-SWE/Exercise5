@@ -11,7 +11,7 @@ namespace Exercise5.Interfaces
     {
         public string RegNo { get; set; }
         public string Color { get; set; }
-        public int NoOfWheels { get; set; }
+        public string NoOfWheels { get; set; }
  
     }
 }

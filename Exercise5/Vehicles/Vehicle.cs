@@ -22,9 +22,9 @@ namespace Exercise5
 
         public string RegNo { get; set; }
         public string Color { get; set; }
-        public int NoOfWheels { get; set; }
+        public string NoOfWheels { get; set; }
 
-        public Vehicle(string regNo, string color, int noOfWheels)
+        public Vehicle(string regNo, string color, string noOfWheels)
         {
             RegNo = regNo;
             Color = color;
@@ -41,7 +41,7 @@ namespace Exercise5
         {
             string wheelInfo = "";
 
-            if (NoOfWheels != 0)
+            if (NoOfWheels != "0")
             {
                 wheelInfo = ($" with {NoOfWheels} wheels");
             }

@@ -109,8 +109,15 @@ namespace Exercise5
                     return input;
                 }
                 else
-                {
-                    UI.DisplayWarning($"Please enter a valid input ({String.Join(", ", ValidOptions)})");
+                {   
+                    if (ValidOptions.Count > 20)
+                    {
+                        UI.DisplayWarning($"Please enter a valid input (Leftmost Column)");
+                    }
+                    else
+                    {
+                        UI.DisplayWarning($"Please enter a valid input ({String.Join(", ", ValidOptions)})");
+                    }
                     return "";
                 }
 

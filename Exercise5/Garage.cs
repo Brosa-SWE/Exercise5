@@ -150,6 +150,25 @@ namespace Exercise5
             return UniqueReturnValues.ToList();
         }
 
+        public List<string> GetVehiclesByProperties(string VehicleType, string Color, string NoOfWheels)
+        {
+
+            var MatchingVehicles = from Vehicle in Vehicles
+                                   where Vehicle.VehicleType.IndexOf(VehicleType) >= 0
+                                   where Vehicle.Color.IndexOf(Color) >= 0
+                                   where Vehicle.NoOfWheels.IndexOf(NoOfWheels) >= 0
+                                   select Vehicle;
+
+            List<string> ReturnValues = new List<string>();
+
+            foreach (Vehicle Vehicle in MatchingVehicles)
+            {
+                ReturnValues.Add(Vehicle.RegNo + " - " + Vehicle.Color + " " + Vehicle.VehicleType);
+            }
+
+            return ReturnValues;
+        }
+
 
         public bool ContainsRegNo(string RegNo)
         {

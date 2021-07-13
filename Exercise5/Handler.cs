@@ -45,7 +45,7 @@ namespace Exercise5
 
             string RegNo;
             string Color;
-            int Wheels;
+            string Wheels;
             string SpecialPropertyValue;
 
             while (true)
@@ -97,9 +97,17 @@ namespace Exercise5
                 // ======================
                 while (true)
                 {
-                    Wheels = UI.GetUserInputInt("Enter no of Wheels: ", true, 0, 50);
+                    Wheels = UI.GetUserInputString("Enter no of Wheels: ", true);
+                    int WheelsInt;
 
-                    if (Wheels != -9999) { break; }
+                    if (Wheels == "" || !int.TryParse(Wheels, out WheelsInt))
+                    {
+                        UI.DisplayFailure("You must input number of wheels as an integer.");
+                    }
+                    else
+                    {
+                        break;
+                    }
                 }
 
                 // ======================
@@ -209,20 +217,104 @@ namespace Exercise5
         {
             Menu Menu;
             List<string> Values;
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Search for all ");
+            List<string> MatchingRegNos = new List<string>();
 
             while (true)
             {
-                Values = Garage.GetUniqueVehicleColors();
-
-                Menu = new Menu(UI, "Select Vehicle Types");
-                
                 UI.ClearScreen();
-                UI.Write(sb.ToString());
 
-                
+                string SelectedVehicleType = "";
+                string SelectedVehicleColor = "";
+                string SelectedVehicleWheels = "";
+
+                // Vehicle Type
+                Values = Garage.GetUniqueVehicleTypes(); 
+                Menu = new Menu(UI, "Select Vehicle Type or 0 to Exit To Main Menu: ", Values);
+                Menu.AddItem("A", "Any Vehicle");
+                Menu.AddEmptyLine();
+                Menu.AddItem("0", "Exit to Main Menu");
+                Menu.UseCurrentMenuAsDictionaryForInput = true;
+
+                SelectedVehicleType = Menu.DisplayAndGetUserInput();
+                if (SelectedVehicleType.Contains("Exit")) { return false; }
+
+                switch (SelectedVehicleType)
+                {
+                    case "Any Vehicle":
+                        SelectedVehicleType = "";
+                        break;
+
+                    default:
+                        
+                        break;
+                }
+
+                MatchingRegNos = Garage.GetVehiclesByProperties(SelectedVehicleType, SelectedVehicleColor, SelectedVehicleWheels);
+                UI.WriteSuccess($"Found {MatchingRegNos.Count} matching Vehicles. Press any key to continue refining Search...");
+                UI.Write(" ");
+                UI.WriteList(MatchingRegNos);
+                UI.SetCursorPosition(0, 0);
+                UI.WaitForKey();
+
+                // Color
+                Values = Garage.GetUniqueVehicleColors();
+                Menu = new Menu(UI, "Select Color or 0 to Exit To Main Menu: ", Values);
+                Menu.AddItem("A", "Any Color");
+                Menu.AddEmptyLine();
+                Menu.AddItem("0", "Exit to Main Menu");
+                Menu.UseCurrentMenuAsDictionaryForInput = true;
+
+                SelectedVehicleColor = Menu.DisplayAndGetUserInput();
+                if (SelectedVehicleColor.Contains("Exit")) { return false; }
+
+                switch (SelectedVehicleColor)
+                {
+                    case "Any Color":
+                        SelectedVehicleColor = "";
+                        break;
+
+                    default:
+                        
+                        break;
+                }
+
+                MatchingRegNos = Garage.GetVehiclesByProperties(SelectedVehicleType, SelectedVehicleColor, SelectedVehicleWheels);
+                UI.WriteSuccess($"Found {MatchingRegNos.Count} matching Vehicles. Press any key to continue refining Search...");
+                UI.Write(" ");
+                UI.WriteList(MatchingRegNos);
+                UI.SetCursorPosition(0, 0);
+                UI.WaitForKey();
+
+                // NoOfWheels
+                Values = Garage.GetUniqueVehicleWheels();
+                Menu = new Menu(UI, "Select Number of Wheels or 0 to Exit To Main Menu: ", Values);
+                Menu.AddItem("A", "Any Number of Wheels");
+                Menu.AddEmptyLine();
+                Menu.AddItem("0", "Exit to Main Menu");
+                Menu.UseCurrentMenuAsDictionaryForInput = true;
+
+                SelectedVehicleWheels = Menu.DisplayAndGetUserInput();
+                if (SelectedVehicleWheels.Contains("Exit")) { return false; }
+
+                switch (SelectedVehicleWheels)
+                {
+                    case "Any Number of Wheels":
+                        SelectedVehicleWheels = "";
+                        break;
+
+                    default:
+                        
+                        break;
+                }
+
+                MatchingRegNos = Garage.GetVehiclesByProperties(SelectedVehicleType, SelectedVehicleColor, SelectedVehicleWheels);
+                UI.WriteSuccess($"Found {MatchingRegNos.Count} matching Vehicles. Press any key to continue refining Search...");
+                UI.Write(" ");
+                UI.WriteList(MatchingRegNos);
+                UI.SetCursorPosition(0, 0);
+                UI.WaitForKey();
             }
+
         }
 
         internal bool RemoveVehicle(string RegNo)
@@ -372,7 +464,7 @@ namespace Exercise5
             string RegNo;
             string Color;
             string SpecialValue;
-            int Wheels;
+            string Wheels;
             Vehicle Vehicle = null;
 
             for (int j = 0; j < NoOfVehiclesToCreate; j++)
@@ -386,27 +478,27 @@ namespace Exercise5
                 {
 
                     case "Airplane":
-                        Wheels = 6;
+                        Wheels = "6";
                         Vehicle = new Airplane(RegNo, Color, Wheels, int.Parse(SpecialValue));
                         break;
 
                     case "Boat":
-                        Wheels = 0;
+                        Wheels = "0";
                         Vehicle = new Boat(RegNo, Color, Wheels, int.Parse(SpecialValue));
                         break;
 
                     case "Bus":
-                        Wheels = 8;
+                        Wheels = "8";
                         Vehicle = new Bus(RegNo, Color, Wheels, int.Parse(SpecialValue));
                         break;
 
                     case "Car":
-                        Wheels = 4;
+                        Wheels = "4";
                         Vehicle = new Car(RegNo, Color, Wheels, SpecialValue);
                         break;
 
                     case "Motorcycle":
-                        Wheels = 2;
+                        Wheels = "2";
                         Vehicle = new Motorcycle(RegNo, Color, Wheels, int.Parse(SpecialValue));
                         break;
                 }

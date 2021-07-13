@@ -35,7 +35,7 @@ namespace Exercise5
                     input = "<INVALID>"; // Value to provoke invalid option below
                 }
 
-                return input;
+                return input.ToUpper();
 
             }
         }
@@ -92,6 +92,12 @@ namespace Exercise5
         public void Write(string messageToWrite)
         {
             Console.WriteLine(messageToWrite);
+        }
+        internal void WriteSuccess(string messageToWrite)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine(messageToWrite);
+            Console.ForegroundColor = ConsoleColor.White;
         }
         internal void WriteWarning(string messageToWrite)
         {

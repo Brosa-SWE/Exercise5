@@ -9,12 +9,12 @@ namespace Exercise5.Vehicles
     class Airplane : Vehicle
     {
 
-        public Airplane(string regNo, string color, int noOfWheels, int noOfEngines) : base(regNo, color, noOfWheels)
+        public Airplane(string regNo, string color, string noOfWheels, int noOfEngines) : base(regNo, color, noOfWheels)
         {
             SpecialPropertyValue = noOfEngines.ToString();
         }
 
-        public Airplane(string regNo, string color, int noOfWheels) : base(regNo, color, noOfWheels)
+        public Airplane(string regNo, string color, string noOfWheels) : base(regNo, color, noOfWheels)
         {
            
         }

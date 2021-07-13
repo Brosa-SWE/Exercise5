@@ -8,12 +8,12 @@ namespace Exercise5.Vehicles
 {
     class Bus : Vehicle
     {
-        public Bus(string regNo, string color, int noOfWheels, int noOfSeats) : base(regNo, color, noOfWheels)
+        public Bus(string regNo, string color, string noOfWheels, int noOfSeats) : base(regNo, color, noOfWheels)
         {
             SpecialPropertyValue = noOfSeats.ToString();
         }
 
-        public Bus(string regNo, string color, int noOfWheels) : base(regNo, color, noOfWheels) { }
+        public Bus(string regNo, string color, string noOfWheels) : base(regNo, color, noOfWheels) { }
 
         public override string ToString()
         {

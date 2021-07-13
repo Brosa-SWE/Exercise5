@@ -33,10 +33,6 @@ namespace Exercise5
             //ToDo: Remove this Dev Test
             Garage = Handler.CreateTestGarage();
 
-            List<string> Colors = Garage.GetUniqueVehicleTypes();
-            UI.WriteList(Colors);
-            UI.WaitForKey();
-
             while (true)
             {
 
