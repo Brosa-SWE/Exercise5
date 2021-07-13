@@ -109,6 +109,48 @@ namespace Exercise5
             return ReturnValues;
         }
 
+        public List<string> GetUniqueVehicleColors()
+        {
+            var MatchingValues = from Vehicle in Vehicles select Vehicle.Color;
+
+            var UniqueReturnValues = GetUniqueValuesFromList(MatchingValues);
+
+            return UniqueReturnValues;
+        }
+
+        public List<string> GetUniqueVehicleTypes()
+        {
+            var MatchingValues = from Vehicle in Vehicles select Vehicle.VehicleType;
+
+            var UniqueReturnValues = GetUniqueValuesFromList(MatchingValues);
+
+            return UniqueReturnValues;
+        }
+
+        public List<string> GetUniqueVehicleWheels()
+        {
+            var MatchingValues = from Vehicle in Vehicles select Vehicle.NoOfWheels.ToString();
+
+            var UniqueReturnValues = GetUniqueValuesFromList(MatchingValues);
+
+            return UniqueReturnValues;
+        }
+
+        private List<string> GetUniqueValuesFromList(IEnumerable<string> ListToGetUniqueValuesFrom)
+        {
+            List<string> ReturnValues = new List<string>();
+
+            foreach (string Value in ListToGetUniqueValuesFrom)
+            {
+                ReturnValues.Add(Value);
+            }
+
+            var UniqueReturnValues = new HashSet<string>(ReturnValues);
+
+            return UniqueReturnValues.ToList();
+        }
+
+
         public bool ContainsRegNo(string RegNo)
         {
              return GetVehicleByRegNo(RegNo) != null;

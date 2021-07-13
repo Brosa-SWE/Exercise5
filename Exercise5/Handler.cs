@@ -161,14 +161,10 @@ namespace Exercise5
 
                 return true;
             }
-
-            //return false;
         }
 
-        internal void SearchVehicle()
+        internal void SearchVehicleByRegNo()
         {
-            // UI.WriteError("Search Not Implemented Yet");
-
             ConsoleKeyInfo Input;
             StringBuilder sb = new StringBuilder();
             List<string> MatchingRegNos = new List<string>();
@@ -207,6 +203,26 @@ namespace Exercise5
             } 
             while (Input.Key != ConsoleKey.Enter);
 
+        }
+
+        internal bool SearchVehicleByProperties()
+        {
+            Menu Menu;
+            List<string> Values;
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Search for all ");
+
+            while (true)
+            {
+                Values = Garage.GetUniqueVehicleColors();
+
+                Menu = new Menu(UI, "Select Vehicle Types");
+                
+                UI.ClearScreen();
+                UI.Write(sb.ToString());
+
+                
+            }
         }
 
         internal bool RemoveVehicle(string RegNo)
@@ -306,14 +322,21 @@ namespace Exercise5
             }
         }
 
+        public Garage CreateTestGarage()
+        {
+            int NoOfVehiclesToCreate = 250;
+
+            Garage = new Garage(NoOfVehiclesToCreate);
+
+            CreateRandomVehiclesInGarage(NoOfVehiclesToCreate);
+
+            return Garage;
+        }
+
+
         public void AddTestData()
         {
-            string VehicleType;
-            string RegNo;
-            string Color;
-            string SpecialValue;
-            int Wheels;
-            Vehicle Vehicle = null;
+ 
 
             while (true)
             {
@@ -326,45 +349,7 @@ namespace Exercise5
 
                 if (NoOfVehiclesToCreate == 0) { return; }
 
-                for (int j = 0; j < NoOfVehiclesToCreate; j++)
-                {
-                    VehicleType = Randomizer.RandomVehicleType();
-                    RegNo = Randomizer.RandomRegNo();
-                    Color = Randomizer.RandomColor();
-                    SpecialValue = Randomizer.RandomSpecialValue(VehicleType);
-
-                    switch (VehicleType)
-                    {
-
-                        case "Airplane":
-                            Wheels = 6;
-                            Vehicle = new Airplane(RegNo, Color, Wheels, int.Parse(SpecialValue));
-                            break;
-
-                        case "Boat":
-                            Wheels = 0;
-                            Vehicle = new Boat(RegNo, Color, Wheels, int.Parse(SpecialValue));
-                            break;
-
-                        case "Bus":
-                            Wheels = 8;
-                            Vehicle = new Bus(RegNo, Color, Wheels, int.Parse(SpecialValue));
-                            break;
-
-                        case "Car":
-                            Wheels = 4;
-                            Vehicle = new Car(RegNo, Color, Wheels, SpecialValue);
-                            break;
-
-                        case "Motorcycle":
-                            Wheels = 2;
-                            Vehicle = new Motorcycle(RegNo, Color, Wheels, int.Parse(SpecialValue));
-                            break;
-                    }
-
-                    Garage.Add(Vehicle);
-
-                }
+                CreateRandomVehiclesInGarage(NoOfVehiclesToCreate);
 
                 int created = Garage.Count - parkedVehicleQtyBefore;
 
@@ -378,6 +363,56 @@ namespace Exercise5
                 }
 
                 return;
+            }
+        }
+
+        private void CreateRandomVehiclesInGarage(int NoOfVehiclesToCreate)
+        {
+            string VehicleType;
+            string RegNo;
+            string Color;
+            string SpecialValue;
+            int Wheels;
+            Vehicle Vehicle = null;
+
+            for (int j = 0; j < NoOfVehiclesToCreate; j++)
+            {
+                VehicleType = Randomizer.RandomVehicleType();
+                RegNo = Randomizer.RandomRegNo();
+                Color = Randomizer.RandomColor();
+                SpecialValue = Randomizer.RandomSpecialValue(VehicleType);
+
+                switch (VehicleType)
+                {
+
+                    case "Airplane":
+                        Wheels = 6;
+                        Vehicle = new Airplane(RegNo, Color, Wheels, int.Parse(SpecialValue));
+                        break;
+
+                    case "Boat":
+                        Wheels = 0;
+                        Vehicle = new Boat(RegNo, Color, Wheels, int.Parse(SpecialValue));
+                        break;
+
+                    case "Bus":
+                        Wheels = 8;
+                        Vehicle = new Bus(RegNo, Color, Wheels, int.Parse(SpecialValue));
+                        break;
+
+                    case "Car":
+                        Wheels = 4;
+                        Vehicle = new Car(RegNo, Color, Wheels, SpecialValue);
+                        break;
+
+                    case "Motorcycle":
+                        Wheels = 2;
+                        Vehicle = new Motorcycle(RegNo, Color, Wheels, int.Parse(SpecialValue));
+                        break;
+                }
+
+                Garage.Add(Vehicle);
+
             }
         }
 

@@ -23,6 +23,20 @@ namespace Exercise5
             MenuHeadline = menuHeadline;
         }
 
+        public Menu(UI ui, string menuHeadline, List<string> menuItems)
+        {
+            UI = ui;
+            MenuHeadline = menuHeadline;
+
+            int i = 1;
+
+            foreach (string MenuItem in menuItems)
+            {
+                AddItem(i.ToString(), MenuItem);
+                i++;
+            }
+        }
+
         public bool UseCurrentMenuAsDictionaryForInput
         {
             get => UseDictionary;
