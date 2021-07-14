@@ -13,9 +13,9 @@ namespace Exercise5
     //Todo: Change to IEnumerable<T>
     internal class Garage : IEnumerable // : IGarage<IEnumerable>
     {
-       // public event UIwriteDelegate UIwrite;
-       public event UIwriteErrorDelegate UIwriteError;
-       // public event UIwriteWarningDelegate UIwriteWarning;
+        // public event UIwriteDelegate UIwrite;
+        public event UIwriteErrorDelegate UIwriteError;
+        // public event UIwriteWarningDelegate UIwriteWarning;
 
         private int _vehicleCapacity;
         public int VehicleCapacity { get { return _vehicleCapacity; } }
@@ -28,38 +28,15 @@ namespace Exercise5
             Vehicles = new Vehicle[vehicleCapacity];
 
         }
+        public bool HasAtLeastOneVehicleParked { get { return Count > 0; } }
 
-        public bool HasAtLeastOneVehicleParked
-        {
-            get
-            {
-                if (Count > 0)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
-
-        public bool HasRoom
-        { get { return !IsFull; } }
+        public bool HasRoom { get { return !IsFull; } }
 
         public bool IsFull { get { return VehicleCapacity == Count; } }
 
-        public bool IsEmpty
-        {
+        public bool IsEmpty { get { return Count == 0; } }
 
-            get
-            {
-                if (Count == 0)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
+        public int FreeSpaces { get { return VehicleCapacity - Count; } }
 
         public IEnumerator GetEnumerator()
         {
@@ -83,7 +60,11 @@ namespace Exercise5
             }
         }
 
-        public int FreeSpaces { get { return VehicleCapacity - Count; } }
+
+        public bool ContainsRegNo(string RegNo)
+        {
+            return GetVehicleByRegNo(RegNo) != null;
+        }
 
         public Vehicle GetVehicleByRegNo(string RegNo)
         {
@@ -95,15 +76,15 @@ namespace Exercise5
         public List<string> GetVehiclesMatchingRegNo(string RegNo)
         {
 
-            var MatchingVehicles = from Vehicle in Vehicles 
-                           where Vehicle.RegNo.IndexOf(RegNo, StringComparison.InvariantCultureIgnoreCase) >= 0
-                           select Vehicle;
+            var MatchingVehicles = from Vehicle in Vehicles
+                                   where Vehicle.RegNo.IndexOf(RegNo, StringComparison.InvariantCultureIgnoreCase) >= 0
+                                   select Vehicle;
 
             List<string> ReturnValues = new List<string>();
 
             foreach (Vehicle Vehicle in MatchingVehicles)
             {
-                ReturnValues.Add(Vehicle.RegNo + " - " + Vehicle.Color + " " + Vehicle.VehicleType);
+                ReturnValues.Add(Vehicle.ToString());
             }
 
             return ReturnValues;
@@ -150,6 +131,19 @@ namespace Exercise5
             return UniqueReturnValues.ToList();
         }
 
+        private IEnumerable<Vehicle> GetVehicleColByProperties(string VehicleType, string RegNo, string Color, string NoOfWheels)
+        {
+
+            var MatchingVehicles = from Vehicle in Vehicles
+                                   where Vehicle.VehicleType.IndexOf(VehicleType) >= 0
+                                   where Vehicle.RegNo.IndexOf(RegNo) >= 0
+                                   where Vehicle.Color.IndexOf(Color) >= 0
+                                   where Vehicle.NoOfWheels.IndexOf(NoOfWheels) >= 0
+                                   select Vehicle;
+
+            return MatchingVehicles;
+        }
+
         public List<string> GetVehiclesByProperties(string VehicleType, string Color, string NoOfWheels)
         {
 
@@ -163,17 +157,13 @@ namespace Exercise5
 
             foreach (Vehicle Vehicle in MatchingVehicles)
             {
-                ReturnValues.Add(Vehicle.RegNo + " - " + Vehicle.Color + " " + Vehicle.VehicleType);
+                ReturnValues.Add(Vehicle.ToString());
             }
 
             return ReturnValues;
         }
 
 
-        public bool ContainsRegNo(string RegNo)
-        {
-             return GetVehicleByRegNo(RegNo) != null;
-        }
 
         public bool Add(Vehicle vehicle)
         {
@@ -252,7 +242,7 @@ namespace Exercise5
             {
                 if (Vehicle != null)
                 {
-                    VehiclesByRegNo.Add($"{Vehicle.RegNo} - {Vehicle.Color} {Vehicle.VehicleType}");
+                    VehiclesByRegNo.Add(Vehicle.ToString());
                 }
             }
 

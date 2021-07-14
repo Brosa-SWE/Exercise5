@@ -39,14 +39,7 @@ namespace Exercise5
 
         public override string ToString()
         {
-            string wheelInfo = "";
-
-            if (NoOfWheels != "0")
-            {
-                wheelInfo = ($" with {NoOfWheels} wheels");
-            }
-
-            return $"{Color} {VehicleType} {RegNo}{wheelInfo}";
+            return $"{RegNo} - {Color} {VehicleType} with {NoOfWheels} wheels and {SpecialPropertyValue} {SpecialPropertyLabel}";
         }
 
         public string VehicleType
